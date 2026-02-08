@@ -11,12 +11,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
-await authService.signup('John', 'test');
-await authService.login('John', 'test');
-
 app.use('/auth', routes.auth);
 app.use('/posts', routes.post);
 app.use('/posts/:postId/comments', routes.comment);
+
+app.use((error, req, res, next) => {
+    console.log(error);   
+});
 
 app.listen(process.env.PORT, () => 
     console.log(`Blog app listening on port ${process.env.PORT}!`),    
