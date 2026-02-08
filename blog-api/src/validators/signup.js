@@ -8,7 +8,7 @@ const passwordLengthError = 'must be between 5 and 16 characters.';
 const validateSignup = [    
     body('username')
         .trim()
-        .notEmpty().withMessage(`Username ${usernameLengthError}`)
+        .notEmpty().withMessage(`Username ${emptyError}`)
         .isLength({ min: 1, max: 16 }).withMessage(`Username ${usernameLengthError}`)
         .custom(async (username) => {
             const user = await prisma.user.findUnique({
