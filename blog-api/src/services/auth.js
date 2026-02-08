@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import prisma from '../config/prisma.js';
+import generateToken from '../utils/generateToken.js';
 
 const signup = async ({ username, password }) => {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -15,21 +16,25 @@ const signup = async ({ username, password }) => {
 };
 
 const login = async ({ username, password }) => {
-    const user = await prisma.user.findUnique({
+    const userData = await prisma.user.findUnique({
         where: { username }
     });
 
-    if (!user) {
+    if (!userData) {
         throw new Error('Invalid username');
     };
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, userData.password);
 
     if (!isPasswordMatch) {
         throw new Error('Invalid password');
     };
-// TODO: generate JSON web token
-    return user;
+
+    const { password: _, ...user } = userData;
+
+    const token = generateToken(user);
+
+    return { user, token };
 };
 
 export default { signup, login };
