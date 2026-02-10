@@ -1,12 +1,14 @@
 import express from 'express';
-import controller from '../controllers/post.js';
+import postController from '../controllers/post.js';
 import requireAuth from '../middleware/requireAuth.js'; 
 
 const router = express.Router();
 
-router.post('/', requireAuth, controller.createPost);
-router.get('/', controller.getPosts);
-router.put('/:postId', requireAuth, controller.updatePost);
-router.delete('/:postId', requireAuth, controller.deletePost);
+router.post('/', requireAuth, postController.create);
+router.get('/', postController.getAll);
+router.put('/:postId', requireAuth, postController.update);
+router.delete('/:postId', requireAuth, postController.delete);
+router.patch('/:postId/publish', requireAuth, postController.publish);
+router.patch('/:postId/unpublish', requireAuth, postController.unpublish);
 
 export default router;

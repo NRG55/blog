@@ -1,52 +1,69 @@
 import postService from '../services/post.js';
 
-const createPost = async (req, res) => {
-    try {
-        const post = await postService.createPost(req.user.id, req.body);
+const postController = {
+    create: async function(req, res) {
+                try {
+                    const post = await postService.create(req.user.id, req.body);
 
-        return res.status(201).json({ message: 'Post created successfully', post });
+                    return res.status(201).json({ message: 'Post created successfully', post });
 
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    };    
+                } catch (error) {
+                    return res.status(400).json({ error: error.message });
+                };    
+            },
+
+    getAll: async function(req, res) {
+                try {
+                    const posts = await postService.getAll();
+
+                    return res.status(200).json({ message: 'Success', posts });
+
+                } catch (error) {
+                    return res.status(500).json({ error: error.message });
+                };   
+            },
+
+    update: async function(req, res) {   
+                try {
+                    await postService.update(req.params.postId, req.body);
+
+                    return res.sendStatus(204);
+
+                } catch (error) {
+                    return res.status(400).json({ error: error.message });
+                };
+            },
+
+    delete: async function(req, res) {
+                try {
+                    await postService.delete(req.params.postId);
+
+                    return res.sendStatus(204);
+
+                } catch (error) {
+                    return res.status(400).json({ error: error.message });
+                };    
+            },
+    publish: async function(req, res) {
+                try {
+                    await postService.publish(req.params.postId);
+
+                    return res.sendStatus(204);
+
+                } catch (error) {
+                    return res.status(400).json({ error: error.message });
+                };    
+            },
+    unpublish: async function(req, res) {
+                try {
+                    await postService.unpublish(req.params.postId);
+
+                    return res.sendStatus(204);
+
+                } catch (error) {
+                    return res.status(400).json({ error: error.message });
+                };    
+            },
 };
 
-const getPosts = async (req, res) => {
-    try {
-        const posts = await postService.getPosts();
-
-        return res.status(200).json({ message: 'Success', posts });
-
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
-    };   
-};
-
-const updatePost = async (req, res) => {   
-    try {
-        await postService.updatePost(req.params.postId, req.body);
-
-        return res.sendStatus(204);
-
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    };
-};
-
-const deletePost = async (req, res) => {
-    try {
-        await postService.deletePost(req.params.postId);
-
-        return res.sendStatus(204);
-
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    };    
-};
-
-export default { 
-    createPost,
-    getPosts,
-    updatePost,
-    deletePost 
-};
+export default postController;
