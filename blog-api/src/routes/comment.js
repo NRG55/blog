@@ -1,8 +1,12 @@
 import express from 'express';
-import controller from '../controllers/comment.js'; 
+import commentController from '../controllers/comment.js';
+import requireAuth from '../middleware/requireAuth.js'; 
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-router.get('/', controller.getComments);
+router.post('/', requireAuth, commentController.create);
+router.get('/', commentController.getAll);
+router.put('/:commentId', requireAuth, commentController.update);
+router.delete('/:commentId', requireAuth, commentController.delete);
 
 export default router;
