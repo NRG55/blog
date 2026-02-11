@@ -1,10 +1,14 @@
 import prisma from "../config/prisma.js";
+import generateSlug from "../utils/generateSlug.js";
 
 const postService = {
     create: async function(authorId, { title, body }) {
+                const slug = await generateSlug(title);
+
                 return await prisma.post.create({
                     data: {
                         authorId,
+                        slug,
                         title,
                         body,
                         published: true,
@@ -14,6 +18,12 @@ const postService = {
 
     getAll: async function() {
                 return await prisma.post.findMany();
+            },
+
+    getBySlug: async function(slug) {
+                return await prisma.post.findUnique( {
+                    where: { slug }
+                });
             },
 
     update: async function(postId, { title, body }) {
