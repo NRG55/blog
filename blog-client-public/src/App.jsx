@@ -1,15 +1,12 @@
-import './App.css'
+import { Outlet } from 'react-router';
 
 function App() {
 
     return (
-        <>
-            <div class="text-red-500">
-                Test   
-            </div>
-        
+        <>        
+            <Outlet />        
         </>
     )
 }
 
-export default App
+export default App;
