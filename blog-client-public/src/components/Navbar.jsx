@@ -35,10 +35,10 @@ const Navbar = () => {
                 >
                     <i className="fi fi-rr-search text-xl h-5"></i>
                 </button>
-                <Link to="/login" className="whitespace-nowrap bg-black text-white rounded-xs py-2 px-6 capitalize hover:bg-black/80">
+                <Link to="auth/login" className="whitespace-nowrap bg-black text-white rounded-xs py-2 px-6 capitalize hover:bg-black/80">
                     Log in
                 </Link>
-                <Link to="/signup" className="hidden md:block whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60">
+                <Link to="auth/signup" className="hidden md:block whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60">
                     Sign up
                 </Link>
             </div>            
