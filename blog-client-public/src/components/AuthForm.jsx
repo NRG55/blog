@@ -1,12 +1,24 @@
 import { Link } from "react-router";
 import Input from "./Input";
 
-const AuthForm = ({ type }) => {
+const AuthForm = ({ type, handleSubmit, errors }) => {
+
     return (
-        <form className="w-[80%] max-w-100 -mt-60">
+        <form
+            onSubmit={handleSubmit} 
+            className="w-[80%] max-w-100 -mt-60"
+        >
             <h1 className="text-3xl text-center mb-18">
                 {type === 'login' ? 'Welcome Back' : 'Create Account'}
             </h1>
+
+            {
+                errors.map((error, i) => (
+                    <p key={"error-" + i}>
+                        {error.msg}
+                    </p>
+                ))
+            }
 
             <Input
                 type="text"
@@ -35,7 +47,7 @@ const AuthForm = ({ type }) => {
 
             <button
                 type="submit"
-                className="w-full bg-black text-white rounded-xs py-2 px-6 mt-6 hover:bg-black/80"
+                className="w-full bg-black text-white rounded-xs py-2 px-6 mt-6 hover:bg-black/80"                
             >
                 { type === 'signup' ? 'Sign up' : 'Log in' }
             </button>

@@ -1,5 +1,5 @@
 import AuthForm from '../components/AuthForm';
-import PageAnimationWrapper from '../common/pageAnimation';
+import PageAnimationWrapper from '../common/PageAnimation';
 
 const LoginPage = () => { 
 
