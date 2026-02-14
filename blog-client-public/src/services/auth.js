@@ -1,6 +1,8 @@
 const authService = {
-    signup: async function(userData) {               
-                const response = await fetch('http://localhost:3000/auth/signup', {
+    authenticate: async function(userData, authMode) {
+                const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
+                // authMode: 'signup' or 'login'
+                const response = await fetch(`${SERVER_DOMAIN}/auth/${authMode}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(userData),
@@ -18,7 +20,7 @@ const authService = {
                 };
                 
                 return data;                
-            },
+            }
 };
 
 export default authService;

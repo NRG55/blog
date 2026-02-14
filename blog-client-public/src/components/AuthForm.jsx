@@ -13,7 +13,7 @@ const AuthForm = ({ type, handleSubmit, errors }) => {
             </h1>
 
             {
-                errors.map((error, i) => (
+                errors && errors.map((error, i) => (
                     <p key={"error-" + i}>
                         {error.msg}
                     </p>

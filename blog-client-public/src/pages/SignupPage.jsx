@@ -12,7 +12,7 @@ const SignupPage = () => {
         const userData = Object.fromEntries(new FormData(event.target));       
 
         try {
-            const result = await authService.signup(userData);
+            const result = await authService.authenticate(userData, 'signup');
 
         } catch (error) {
             setErrors(error.cause);          
