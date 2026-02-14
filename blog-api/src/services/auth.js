@@ -12,7 +12,9 @@ const signup = async ({ username, password }) => {
         }
     });
 
-    return user;
+    const token = generateToken(user);
+
+    return { user, token };
 };
 
 const login = async ({ username, password }) => {

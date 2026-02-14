@@ -8,10 +8,12 @@ const validateLogin = [
      body('username')
         .trim()
         .notEmpty().withMessage(`Username ${emptyError}`)
+        .bail()
         .isLength({ min: 1, max: 16 }).withMessage(`Last name ${usernameLengthError}`),
     body('password')
         .trim()
         .notEmpty().withMessage(`Password ${emptyError}`)
+        .bail()
         .isLength({ min: 5, max: 16 }).withMessage(`Password ${passwordLengthError}`), 
 ];
 
