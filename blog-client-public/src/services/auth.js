@@ -21,12 +21,7 @@ const authService = {
                     };
                     
                     return data;                
-                },                
-    logout: function(setUser) {
-                setUser(null);                
-
-                localStorage.removeItem('user');                
-            }
+                }
 };
 
 export default authService;

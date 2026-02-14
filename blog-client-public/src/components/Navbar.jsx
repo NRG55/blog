@@ -1,9 +1,16 @@
 import { Link } from "react-router";
 import logo from '../assets/logo.png';
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContextProvider";
 
 const Navbar = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
+    const { user, setUser } = useContext(UserContext);
+
+    const logout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+    };
 
     return (
         <nav className="z-10 sticky top-0 flex item-center gap-12 w-full px-[5vw] py-5 border-b border-gray-100 bg-white">
@@ -35,12 +42,26 @@ const Navbar = () => {
                 >
                     <i className="fi fi-rr-search text-xl h-5"></i>
                 </button>
-                <Link to="auth/login" className="whitespace-nowrap bg-black text-white rounded-xs py-2 px-6 capitalize hover:bg-black/80">
-                    Log in
-                </Link>
-                <Link to="auth/signup" className="hidden md:block whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60">
-                    Sign up
-                </Link>
+                {
+                    user
+                    ?
+                    <button
+                        onClick={logout}
+                        className="whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60"
+                    >
+                        Log out
+                    </button>
+                    :
+                    <>
+                        <Link to="auth/login" className="whitespace-nowrap bg-black text-white rounded-xs py-2 px-6 capitalize hover:bg-black/80">
+                            Log in
+                        </Link>
+                        <Link to="auth/signup" className="hidden md:block whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60">
+                            Sign up
+                        </Link>
+                    </>
+                }
+                
             </div>            
         </nav>
     )

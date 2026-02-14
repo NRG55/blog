@@ -10,14 +10,14 @@ const UserContextProvider = ({ children }) => {
         const parsedUser = JSON.parse(user);
 
         if (parsedUser) {            
-            const payload = JSON.parse(atob(parsedUser.token.split('.')[1]));
-            const isExpired = payload.exp < Date.now() / 1000;
-            
+            const parsedToken = JSON.parse(atob(parsedUser.token.split('.')[1]));
+            const isExpired = parsedToken.exp < Date.now() / 1000;
+
             if (isExpired) {
                 setUser(null);
                 localStorage.removeItem('user');
             } else {
-                setUser(JSON.parse(user));                
+                setUser(parsedUser);                
             };            
         };
         
