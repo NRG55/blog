@@ -1,10 +1,13 @@
 import AuthForm from '../components/AuthForm';
 import PageAnimationWrapper from '../common/PageAnimation';
 import authService from '../services/auth';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../context/UserContextProvider';
+import { Navigate } from 'react-router';
 
 const LoginPage = () => { 
     const [errors, setErrors] = useState([]);
+    const { user, setUser } = useContext(UserContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault();        
@@ -12,7 +15,7 @@ const LoginPage = () => {
         const userData = Object.fromEntries(new FormData(event.target));       
 
         try {
-            const result = await authService.authenticate(userData, 'login');
+            await authService.authenticate(userData, setUser, 'login');
 
         } catch (error) {
             setErrors(error.cause);          
@@ -20,6 +23,10 @@ const LoginPage = () => {
     };
 
     return (
+        user
+        ?
+        <Navigate to='/'/>
+        :
         <PageAnimationWrapper>
             <section className="flex-1 flex items-center justify-center">
                 <AuthForm 
