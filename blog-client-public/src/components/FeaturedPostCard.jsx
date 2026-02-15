@@ -5,7 +5,7 @@ const FeaturedPostCard = ({ content, author }) => {
     const { title, body, createdAt, slug } = content;
 
     return (
-        <article className="md:col-span-3 md:flex gap-8 p-8">
+        <article className="md:flex md:col-span-3 md:p-8 gap-8">
             <div className="w-full md:max-w-80 aspect-square">
                 <img src={logo} className="w-full h-full"/>
             </div>

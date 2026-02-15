@@ -4,6 +4,7 @@ import postService from "../services/post";
 import PostCard from "../components/PostCard";
 import MiniPostCard from "../components/MiniPostCard";
 import FeaturedPostCard from "../components/FeaturedPostCard";
+import TableOfContents from "../components/TableOfContents";
 
 const HomePage = () => {
     const [ posts, setPosts ] = useState(null);
@@ -34,31 +35,51 @@ const HomePage = () => {
 
     return (
         <AnimationWrapper>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 px-8 gap-8">
+
                 {
                     posts === null 
                     ?
                     <p>Loading ...</p>
                     :
                     <FeaturedPostCard key={`featured-post`} content={featuredPost} author={'author'}/>
-                }
-                
+                }               
 
-                <div className="md:col-span-2 pl-8">
+                <TableOfContents 
+                    routes={["All posts", "Popular posts"]} 
+                    defaultHidden={["Popular posts"]}
+                    className="md:col-span-2"
+                >    
+                    <div className="md:col-span-2">                        
+                        {
+                            posts === null 
+                            ?
+                            <p>Loading ...</p>
+                            :
+                            remainingPosts.map((post, i) => {                        
+                                    return <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
+                                                <PostCard key={`post-${i}`} content={post} author={'author'} />
+                                            </AnimationWrapper>
+                            })
+                        }
+                    </div>
+
                     {
-                        posts === null 
+                        popularPosts === null 
                         ?
                         <p>Loading ...</p>
                         :
-                        remainingPosts.map((post, i) => {                        
-                                return <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                            <PostCard key={`post-${i}`} content={post} author={'author'} />
-                                        </AnimationWrapper>
-                        })
+                        popularPosts.map((post, i) => {
+                            
+                            return <AnimationWrapper key={`popular-post-wrapper-${i}`} transition={{ delay: i * .1 }}>
+                                        <MiniPostCard key={`popular-post-${i}`} content={post} author={'author'} />
+                                    </AnimationWrapper>
+                        }) 
                     }
-                </div>
 
-                <aside className="md:col-span-1 sticky top-20 h-fit pr-8">
+                </TableOfContents>
+
+                <aside className="hidden md:block md:col-start-3 md:row-start-2 md:row-end-4 sticky top-20 h-fit pr-8">
                     <div className="border border-gray-100 p-4">
                         <h3 className="font-medium text-xl mb-6">Popular Posts</h3>
 
@@ -77,10 +98,10 @@ const HomePage = () => {
 
                     </div>
                 </aside>
+
             </div>
         </AnimationWrapper>
-
-    )
+    );
 };
 
 export default HomePage;
