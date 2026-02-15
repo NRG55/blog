@@ -1,5 +1,5 @@
 import AuthForm from '../components/AuthForm';
-import PageAnimationWrapper from '../common/PageAnimation';
+import AnimationWrapper from '../common/AnimationWrapper';
 import authService from '../services/auth';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContextProvider';
@@ -27,7 +27,7 @@ const SignupPage = () => {
         ?
         <Navigate to='/'/>
         :
-        <PageAnimationWrapper>
+        <AnimationWrapper>
             <section className="flex-1 flex items-center justify-center">
                 <AuthForm 
                     type="signup"
@@ -35,7 +35,7 @@ const SignupPage = () => {
                     errors={errors} 
                 />
             </section>
-        </PageAnimationWrapper> 
+        </AnimationWrapper> 
     );
 };
 

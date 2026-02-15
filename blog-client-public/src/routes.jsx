@@ -2,6 +2,7 @@ import App from './App';
 import Layout from './layout/Layout';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 
 const routes = [
     {
@@ -13,7 +14,7 @@ const routes = [
                 children: [
                     { 
                         index: true,
-                        element: <h1>Homepage</h1> 
+                        element: <HomePage /> 
                     },
                     {
                         path: 'auth/signup',

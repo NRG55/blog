@@ -23,6 +23,7 @@ const Navbar = () => {
                             )}
             >
                 <input
+                    id="searchInput"
                     type="text"
                     placeholder="Search"
                     className="w-full bg-gray-100 p-2 pl-6 pr-[12%] rounded-xs
