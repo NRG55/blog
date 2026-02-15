@@ -64,6 +64,16 @@ const postController = {
                     return res.status(400).json({ error: error.message });
                 };    
             },
+    getBySlug: async function(req, res) {
+                try {
+                    const post = await postService.getBySlug(req.params.slug);
+
+                    return res.status(200).json({ message: 'Success', post });
+
+                } catch (error) {
+                    return res.status(500).json({ error: error.message });
+                };   
+            },
 };
 
 export default postController;
