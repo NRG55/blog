@@ -1,5 +1,5 @@
 import AuthForm from '../components/AuthForm';
-import AnimationWrapper from '../common/AnimationWrapper';
+import AnimationWrapper from '../components/AnimationWrapper';
 import authService from '../services/auth';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContextProvider';

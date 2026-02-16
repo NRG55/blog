@@ -1,32 +1,27 @@
 const postService = {
-    getPosts: async function(setPosts) {
+    getPosts: async function(page) {
                     const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
                     
-                    const response = await fetch(`${SERVER_DOMAIN}/posts`);
+                    const response = await fetch(`${SERVER_DOMAIN}/posts?page=${page}`);                    
 
-                    const data = await response.json();
-
-                    if (!response.ok) { 
-                    
-                        throw new Error('GET posts failed', { cause: data.errors || ['Signup failed'] });
+                    if (!response.ok) {                    
+                        throw new Error('Failed to fetch posts', { cause: data.errors || ['Posts not found'] });
                     };
                     
-                    return setPosts(data.posts);                                  
+                    return await response.json();                                  
                 },
-                
-    getPopularPosts: async function(setPopularPosts) {
+
+    getPopularPosts: async function() {
                         const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
                         
-                        const response = await fetch(`${SERVER_DOMAIN}/posts`);
+                        const response = await fetch(`${SERVER_DOMAIN}/posts`);                       
 
-                        const data = await response.json();
-
-                        if (!response.ok) { 
+                        if (!response.ok) {
                         
-                            throw new Error('GET posts failed', { cause: data.errors || ['Signup failed'] });
+                            throw new Error('Failed to fetch popular posts', { cause: data.errors || ['Popular posts not found'] });
                         };
                         
-                        return setPopularPosts(data.posts);                                  
+                        return await response.json();
                     }
 };
 

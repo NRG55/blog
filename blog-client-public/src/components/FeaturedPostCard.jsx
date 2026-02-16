@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import logo from '../assets/logo.png';
+import getDate from '../utils/date';
 
 const FeaturedPostCard = ({ content, author }) => {
     const { title, body, createdAt, slug } = content;
@@ -26,7 +27,7 @@ const FeaturedPostCard = ({ content, author }) => {
 
                 <div className="flex gap-2 items-center text-sm text-gray-600">
                     <p>{author}</p>
-                    <p>{ createdAt }</p>
+                    <p>{ getDate(createdAt) }</p>
                 </div>
             </div>
         </article>

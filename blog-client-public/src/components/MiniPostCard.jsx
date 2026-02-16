@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import getDate from "../utils/date";
 
 const MiniPostCard = ({ content, author }) => {
     const { title, createdAt, slug } = content;
@@ -10,9 +11,9 @@ const MiniPostCard = ({ content, author }) => {
                     {title}
                 </h1>
 
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center text-sm text-gray-600">
                     <p>{author}</p>
-                    <p>{ createdAt }</p>
+                    <p>{ getDate(createdAt) }</p>
                 </div>
             </div>
         </Link>

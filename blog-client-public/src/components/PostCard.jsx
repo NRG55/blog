@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 import logo from '../assets/logo.png';
+import getDate from "../utils/date";
 
-const PostCard = ({ content, author }) => {
+const PostCard = ({ content, author, totalComments = 1 }) => {
     const { title, body, createdAt, slug } = content;
 
     return (
@@ -19,9 +20,13 @@ const PostCard = ({ content, author }) => {
                     {body}
                 </p>
 
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center text-sm text-gray-600">
                     <p>{author}</p>
-                    <p>{ createdAt }</p>
+                    <p>{ getDate(createdAt) }</p>
+                    <span className="flex items-center gap-1">
+                        <i className="fi fi-rr-comment-dots"></i>
+                        { totalComments }
+                    </span>
                 </div>
             </div>
         </Link>
