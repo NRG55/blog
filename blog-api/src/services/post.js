@@ -16,8 +16,29 @@ const postService = {
                 });
             },
 
-    getAll: async function() {
-                return await prisma.post.findMany();
+    getPosts: async function(page = 1) {                
+                const limit = 5;
+
+                const featuredPost = await prisma.post.findFirst({
+                    orderBy: { createdAt: 'desc' },
+                });
+
+                // skip featuredPost for a page pagination (5 posts from 2 to 6, 6 to 11, ...  )
+                const skip = 1 + (page - 1) * limit;
+
+                const posts = await prisma.post.findMany({
+                    take: limit,
+                    skip: skip, 
+                    orderBy: { createdAt: 'desc' },
+                });
+
+                const totalPosts = await prisma.post.count();
+
+                return { 
+                    featuredPost, 
+                    posts, 
+                    totalPosts: totalPosts - 1 // minus featuredPost - total available for "Load more" button
+                };
             },
 
     getBySlug: async function(slug) {
