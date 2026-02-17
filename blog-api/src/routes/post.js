@@ -11,5 +11,6 @@ router.put('/:postId', requireAuth, postController.update);
 router.delete('/:postId', requireAuth, postController.delete);
 router.patch('/:postId/publish', requireAuth, postController.publish);
 router.patch('/:postId/unpublish', requireAuth, postController.unpublish);
+router.get('/search', postController.search);
 
 export default router;

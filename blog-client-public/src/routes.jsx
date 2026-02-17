@@ -3,6 +3,7 @@ import Layout from './layout/Layout';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
+import SearchPage from './pages/SearchPage';
 
 const routes = [
     {
@@ -23,6 +24,10 @@ const routes = [
                     {
                         path: 'auth/login',
                         element: <LoginPage />
+                    },
+                    {
+                        path: 'posts/search',
+                        element: <SearchPage />
                     },
                 ]                
             }      

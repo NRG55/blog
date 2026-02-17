@@ -7,29 +7,29 @@ import FeaturedPostCard from "../components/FeaturedPostCard";
 import TableOfContents from "../components/TableOfContents";
 
 const HomePage = () => {
-    const [postsData, setPostsData] = useState({
+    const [ loading, setLoading ] = useState(false);
+    const [ popularPosts, setPopularPosts ] = useState([]);
+    const [ postsData, setPostsData ] = useState({
                                                     featuredPost: null,
                                                     posts: [],
                                                     totalPosts: 0,
                                                     page: 1
                                                 });
-    const [popularPosts, setPopularPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     const { featuredPost, posts, totalPosts, page } = postsData;
 
-    const getPosts = async (currentPage) => {
+    const getPosts = async (pageNumber) => {
         setLoading(true);
 
         try {            
-            const data = await postService.getPosts(currentPage);
+            const data = await postService.getPosts(pageNumber);
             
             setPostsData(prev => ({
                                     ...prev,
-                                    featuredPost: currentPage === 1 ? data.featuredPost : prev.featuredPost,
-                                    posts: currentPage === 1 ? data.posts : [...prev.posts, ...data.posts],
+                                    featuredPost: pageNumber === 1 ? data.featuredPost : prev.featuredPost,
+                                    posts: pageNumber === 1 ? data.posts : [...prev.posts, ...data.posts],
                                     totalPosts: data.totalPosts,
-                                    page: currentPage
+                                    page: pageNumber
                                 }));
 
         } catch (error) {
@@ -123,7 +123,7 @@ const HomePage = () => {
                         }
 
                     </TableOfContents>
-                }                
+                }
 
                 <aside className="hidden md:block md:col-start-3 md:row-start-2 md:row-end-4 sticky top-20 h-fit pr-8">
                     <div className="border border-gray-100 p-4">

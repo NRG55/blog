@@ -6,7 +6,7 @@ import { UserContext } from '../context/UserContextProvider';
 import { Navigate } from 'react-router';
 
 const SignupPage = () => {
-    const [errors, setErrors] = useState([]);
+    const [ errors, setErrors ] = useState([]);
     const { user, setUser } = useContext(UserContext);
 
     const handleSubmit = async (event) => {

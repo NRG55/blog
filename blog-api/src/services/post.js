@@ -78,6 +78,37 @@ const postService = {
                     data: { published: false },
                 });
             },
+            
+    search: async function(query) {
+                const searchTerm = query.query; 
+                const page = parseInt(query.page) || 1;
+                const limit = parseInt(query.limit) || 5;
+                const skip = (page - 1) * limit;
+
+                const [posts, totalPosts] = await Promise.all([
+                    prisma.post.findMany({
+                        where: {
+                            OR: [
+                                { title: { contains: searchTerm, mode: 'insensitive' } },
+                                { body: { contains: searchTerm, mode: 'insensitive' } }
+                            ]
+                        },
+                        take: limit,
+                        skip: skip,
+                        orderBy: { createdAt: 'desc' },
+                    }),
+                    prisma.post.count({
+                        where: {
+                            OR: [
+                                { title: { contains: searchTerm, mode: 'insensitive' } },
+                                { body: { contains: searchTerm, mode: 'insensitive' } }
+                            ]
+                        }
+                    })
+                ]);
+
+                return { posts: [...posts], totalPosts }
+            },
 };
 
 export default postService;
