@@ -44,6 +44,7 @@ const postController = {
                     return res.status(400).json({ error: error.message });
                 };    
             },
+
     publish: async function(req, res) {
                 try {
                     await postService.publish(req.params.postId);
@@ -54,6 +55,7 @@ const postController = {
                     return res.status(400).json({ error: error.message });
                 };    
             },
+
     unpublish: async function(req, res) {
                 try {
                     await postService.unpublish(req.params.postId);
@@ -64,6 +66,7 @@ const postController = {
                     return res.status(400).json({ error: error.message });
                 };    
             },
+
     getBySlug: async function(req, res) {
                 try {
                     const post = await postService.getBySlug(req.params.slug);
@@ -74,6 +77,7 @@ const postController = {
                     return res.status(500).json({ error: error.message });
                 };   
             },
+
     search: async function(req, res) {
                 try {
                    const data = await postService.search(req.query);

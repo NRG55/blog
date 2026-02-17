@@ -4,6 +4,7 @@ import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
+import PostPage from './pages/PostPage';
 
 const routes = [
     {
@@ -18,17 +19,21 @@ const routes = [
                         element: <HomePage /> 
                     },
                     {
+                        path: 'posts/:slug',
+                        element: <PostPage />
+                    },
+                    {
+                        path: 'posts/search',
+                        element: <SearchPage />
+                    },
+                    {
                         path: 'auth/signup',
                         element: <SignupPage />
                     },
                     {
                         path: 'auth/login',
                         element: <LoginPage />
-                    },
-                    {
-                        path: 'posts/search',
-                        element: <SearchPage />
-                    },
+                    },                    
                 ]                
             }      
         ]

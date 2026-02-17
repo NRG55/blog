@@ -26,6 +26,7 @@ const postService = {
                         
                         return await response.json();
                     },
+
     searchPosts: async function(query, pageNumber) {
                     const params = new URLSearchParams({
                         query, 
@@ -40,6 +41,18 @@ const postService = {
                     };
                     
                     return await response.json();                                  
-                },};
+                },
+                
+    getPostBySlug: async function(slug) {                       
+                        const response = await fetch(`${SERVER_DOMAIN}/posts/slug/${slug}`);                       
+
+                        if (!response.ok) {
+                        
+                            throw new Error('Failed to fetch popular posts');
+                        };
+                        
+                        return await response.json();
+                    },
+};
 
 export default postService;
