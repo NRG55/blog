@@ -16,9 +16,7 @@ const postService = {
                 });
             },
 
-    getPosts: async function(page = 1) {                
-                const limit = 5;
-
+    getPosts: async function(page, limit) {
                 const featuredPost = await prisma.post.findFirst({
                     orderBy: { createdAt: 'desc' },
                 });
@@ -78,7 +76,7 @@ const postService = {
                     data: { published: false },
                 });
             },
-            
+
     search: async function(query) {
                 const searchTerm = query.query; 
                 const page = parseInt(query.page) || 1;

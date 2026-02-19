@@ -2,19 +2,36 @@ import prisma from "../config/prisma.js";
 
 const commentService = {
     create: async function(userId, postId, message) {
-        console.log(userId, postId, message)
                 return await prisma.comment.create({
                     data: {
-                        authorId: userId,
+                        userId,
                         postId,
                         message,
                     },
                 });
             },
 
-    getAll: async function() {
-                return await prisma.comment.findMany();
-            },
+    getByPostId: async function(postId, page, limit) {
+                    const skip = (page - 1) * limit;
+
+                    const [comments, totalComments] = await prisma.$transaction([
+                        prisma.comment.findMany({
+                            where: { postId },
+                            take: limit,
+                            skip: skip, 
+                            orderBy: { createdAt: 'desc' },
+                        }),
+
+                        prisma.comment.count({
+                            where: { postId }
+                        })
+                    ]);
+
+                    return {
+                        comments, 
+                        totalComments
+                    };
+                },
 
     update: async function(commentId, message) {
                 return await prisma.comment.update({

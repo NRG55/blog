@@ -14,7 +14,10 @@ const postController = {
 
     getPosts: async function(req, res) {
                 try {
-                    const data = await postService.getPosts(req.query.page);
+                    const page = Number(req.query.page) || 1;
+                    const limit = Number(req.query.limit) || 5;
+
+                    const data = await postService.getPosts(page, limit);
 
                     return res.status(200).json({ ...data });
 

@@ -2,10 +2,8 @@ import commentService from '../services/comment.js';
 
 const commentController = {
     create: async function(req, res) {
-                try {
-                    const userId = req.user.id;
-                    const postId = req.params.postId;
-                    const message = req.body.message;
+                try {                    
+                    const { userId, postId, message } = req.body;
 
                     const comment = await commentService.create(userId, postId, message);
 
@@ -16,11 +14,15 @@ const commentController = {
                 };    
             },
 
-    getAll: async function(req, res) {
+    getByPostId: async function(req, res) {
                 try {
-                    const comments = await commentService.getAll();
+                    const postId = req.params.postId;
+                    const page = Number(req.query.page) || 1;
+                    const limit = Number(req.query.limit) || 5;
 
-                    return res.status(200).json({ message: 'Success', comments });
+                    const data = await commentService.getByPostId(postId, page, limit);
+
+                    return res.status(200).json({ message: 'Success', ...data });
 
                 } catch (error) {
                     return res.status(500).json({ error: error.message });
