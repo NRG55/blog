@@ -42,7 +42,7 @@ const postService = {
                     
                     return await response.json();                                  
                 },
-                
+
     getPostBySlug: async function(slug) {                       
                         const response = await fetch(`${SERVER_DOMAIN}/posts/slug/${slug}`);                       
 

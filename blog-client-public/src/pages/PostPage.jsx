@@ -4,18 +4,19 @@ import { useEffect, useState } from "react";
 import AnimationWrapper from "../components/AnimationWrapper";
 import logo from '../assets/logo.png';
 import formatDate from "../utils/formatDate";
-import Comments from "../components/Comments";
+import CommentSection from "../components/CommentSection";
 
 const PostPage = () => {
     const [ loading, setLoading ] = useState(false);
     const [ post, setPost ] = useState({
+                                            id: '',
                                             title: '',
                                             body: '',
                                             createdAt: '',
                                             totalComments: 0                                            
                                         });
 
-    const { title, body, createdAt, totalComments = 0 } = post;
+    const { id, title, body, createdAt, totalComments = 0 } = post;
 
     const { slug } = useParams();
 
@@ -68,7 +69,7 @@ const PostPage = () => {
                         <p>{ body }</p>
                     </div>
 
-                    <Comments />
+                    <CommentSection postId={ id } />
                 </div>
             }
 
