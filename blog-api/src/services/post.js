@@ -19,6 +19,11 @@ const postService = {
     getPosts: async function(page, limit) {
                 const featuredPost = await prisma.post.findFirst({
                     orderBy: { createdAt: 'desc' },
+                    include: {
+                        _count: {
+                            select: { comments: true }
+                        }
+                    }
                 });
 
                 // skip featuredPost for a page pagination (5 posts from 2 to 6, 6 to 11, ...  )
@@ -28,6 +33,11 @@ const postService = {
                     take: limit,
                     skip: skip, 
                     orderBy: { createdAt: 'desc' },
+                    include: {
+                        _count: {
+                            select: { comments: true }
+                        }
+                    },
                 });
 
                 const totalPosts = await prisma.post.count();
@@ -41,7 +51,12 @@ const postService = {
 
     getBySlug: async function(slug) {
                 return await prisma.post.findUnique( {
-                    where: { slug }
+                    where: { slug },
+                    include: {
+                        _count: {
+                            select: { comments: true }
+                        }
+                    }
                 });
             },
 

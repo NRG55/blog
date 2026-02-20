@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import commentService from '../services/comment';
 
-const CommentInput = ({ postId, refreshComments }) => {
+const CommentInput = ({ postId, updateComments }) => {
     const [comment, setComment] = useState('');
     const [showNotice, setShowNotice] = useState(false);
     const [isFading, setIsFading] = useState(false);
@@ -29,7 +29,7 @@ const CommentInput = ({ postId, refreshComments }) => {
             await commentService.postComment(userId, token, postId, comment);
             
             setComment('');
-            refreshComments();
+            updateComments(1);
                 
         } catch (error) {
             console.error(error);

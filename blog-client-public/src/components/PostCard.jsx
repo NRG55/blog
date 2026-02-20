@@ -2,8 +2,8 @@ import { Link } from "react-router";
 import logo from '../assets/logo.png';
 import formatDate from "../utils/formatDate";
 
-const PostCard = ({ content, author, totalComments = 1 }) => {
-    const { title, body, createdAt, slug } = content;
+const PostCard = ({ content, author }) => {
+    const { title, body, createdAt, slug, _count: { comments: commentCount = 0 } } = content;
 
     return (
         <Link to={`/posts/${slug}`} className="flex items-center gap-8 border-b border-gray-100">
@@ -23,10 +23,10 @@ const PostCard = ({ content, author, totalComments = 1 }) => {
                 <div className="flex gap-2 items-center text-sm text-gray-600">
                     <p className="capitalize">{author}</p>
                     <p>{ formatDate(createdAt) }</p>
-                    <button className="cursor-pointer w-8 h-8 rounded-full flex items-center justify-center ml-auto bg-gray-100">
+                    <div className="w-4 h-8 flex items-center justify-center ml-auto">
                         <i className="fi fi-rr-comment-dots h-4"></i>                        
-                    </button>
-                    <span>{ totalComments }</span>                    
+                    </div>
+                    <span>{ commentCount }</span>                    
                 </div>
             </div>
         </Link>

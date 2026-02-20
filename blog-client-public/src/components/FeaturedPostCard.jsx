@@ -3,7 +3,7 @@ import logo from '../assets/logo.png';
 import formatDate from '../utils/formatDate';
 
 const FeaturedPostCard = ({ content, author }) => {
-    const { title, body, createdAt, slug, totalComments = 0 } = content;
+    const { title, body, createdAt, slug, _count: { comments: commentCount = 0 } } = content;
 
     return (
         <article className="md:flex md:col-span-3 md:p-8 gap-8">
@@ -30,11 +30,11 @@ const FeaturedPostCard = ({ content, author }) => {
 
                     <p className="mr-8">{ formatDate(createdAt) }</p>
 
-                    <button className="cursor-pointer w-8 h-8 rounded-full flex items-center justify-center mr-2 bg-gray-100">
+                    <div className="w-8 h-8 flex items-center justify-center">
                         <i className="fi fi-rr-comment-dots h-4"></i>                        
-                    </button>
-                    
-                    <span>{ totalComments }</span>
+                    </div>
+
+                    <span>{ commentCount }</span>
                 </div>
             </div>
         </article>

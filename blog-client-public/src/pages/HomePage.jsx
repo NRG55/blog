@@ -18,12 +18,12 @@ const HomePage = () => {
 
     const { featuredPost, posts, totalPosts, page } = postsData;
 
-    const getPosts = async (pageNumber) => {
+    const loadPosts = async (pageNumber) => {
         setLoading(true);
 
         try {            
             const data = await postService.getPosts(pageNumber);
-            
+
             setPostsData(prev => ({
                                     ...prev,
                                     featuredPost: pageNumber === 1 ? data.featuredPost : prev.featuredPost,
@@ -39,7 +39,7 @@ const HomePage = () => {
         };
     };
 
-    const getPopularPosts = async () => {
+    const loadPopularPosts = async () => {
         setLoading(true);
 
         try {
@@ -55,14 +55,14 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        getPosts(1);
-        getPopularPosts();
+        loadPosts(1);
+        loadPopularPosts();
     }, []);
 
     const loadMorePosts = () => {
         const nextPage = page + 1;
 
-        getPosts(nextPage);
+        loadPosts(nextPage);
     };
 
     return (
@@ -90,9 +90,9 @@ const HomePage = () => {
                         <div className="md:col-span-2">                        
                             {                            
                                 posts.map((post, i) => {                        
-                                        return <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                                    <PostCard key={`post-${i}`} content={post} author={'author'} />
-                                                </AnimationWrapper>
+                                    return <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
+                                                <PostCard key={`post-${i}`} content={post} author={'author'} />
+                                            </AnimationWrapper>
                                 })
                             }                        
                         
@@ -102,7 +102,7 @@ const HomePage = () => {
                                 <button 
                                     onClick={loadMorePosts}
                                     disabled={loading}
-                                    className="relative my-8 block mx-auto underline underline-offset-6 text-sm tracking-widest font-medium hover:opacity-60 disabled:opacity-30"
+                                    className="my-8 block mx-auto underline underline-offset-6 text-sm tracking-widest font-medium hover:opacity-60 disabled:opacity-30"
                                 >
                                     {loading ? "Loading..." : "LOAD MORE"}                                   
                                 </button>

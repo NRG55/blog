@@ -13,10 +13,10 @@ const PostPage = () => {
                                             title: '',
                                             body: '',
                                             createdAt: '',
-                                            totalComments: 0                                            
+                                            _count: { comments: 0 }                                                                                        
                                         });
 
-    const { id, title, body, createdAt, totalComments = 0 } = post;
+    const { id, title, body, createdAt, _count: { comments: commentCount } } = post;
 
     const { slug } = useParams();
 
@@ -57,13 +57,7 @@ const PostPage = () => {
                         <div className="flex items-center my-8 text-gray-600">
                             <p className="capitalize mr-4">author</p>
 
-                            <p className="mr-8">{ formatDate(createdAt) }</p>
-                            
-                            <button className="cursor-pointer w-8 h-8 rounded-full flex items-center justify-center mr-2 bg-gray-100">
-                                <i className="fi fi-rr-comment-dots h-5"></i>                        
-                            </button>
-
-                            <span>{ totalComments }</span> 
+                            <p className="mr-8">{ formatDate(createdAt) }</p> 
                         </div>
 
                         <p>{ body }</p>

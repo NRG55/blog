@@ -20,6 +20,13 @@ const commentService = {
                             take: limit,
                             skip: skip, 
                             orderBy: { createdAt: 'desc' },
+                            include: {
+                                user: {
+                                    select: {
+                                        username: true
+                                    }
+                                }
+            }
                         }),
 
                         prisma.comment.count({
