@@ -12,7 +12,7 @@ const Navbar = () => {
     const logout = () => {
         localStorage.removeItem('user');
         setUser(null);
-        
+
         navigate("/");
     };
 
@@ -34,7 +34,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="z-10 sticky top-0 flex item-center gap-12 w-full px-[5vw] py-5 border-b border-gray-100 bg-white">
+        <nav className="max-w-7xl mx-auto z-10 sticky top-0 flex item-center gap-12 w-full px-[5vw] py-5 border-b border-gray-100 bg-white">
             <Link to="/" className="flex ">
                 <img src={logo} className="w-10 h-10"/>
                 <span className="text-3xl self-end">.blog</span>
