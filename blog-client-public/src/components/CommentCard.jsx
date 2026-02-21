@@ -1,15 +1,20 @@
+import { UserContext } from "../context/UserContextProvider";
+import { useContext, useState } from 'react';
 import formatDate from "../utils/formatDate";
-import { useState } from 'react';
 
 const CommentCard = ({ comment, onDelete, onUpdate }) => {
     const [ isEditing, setIsEditing ] = useState(false);
     const [ editedMessage, setEditedMessage ] = useState(comment.message);
 
-    const user = JSON.parse(localStorage.getItem('user'));
+    const { user } = useContext(UserContext);
     const isOwner = user?.id === comment.userId;
     const token = user?.token;
 
     const handleSave = async () => {
+        if (!token) {
+            return;
+        };
+        
         await onUpdate(comment.id, editedMessage, token);
 
         setIsEditing(false);

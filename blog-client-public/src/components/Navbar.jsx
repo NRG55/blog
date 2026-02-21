@@ -12,6 +12,8 @@ const Navbar = () => {
     const logout = () => {
         localStorage.removeItem('user');
         setUser(null);
+        
+        navigate("/");
     };
 
     const handleSearch = (event) => {
