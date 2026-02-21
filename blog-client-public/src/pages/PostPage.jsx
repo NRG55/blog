@@ -13,10 +13,10 @@ const PostPage = () => {
                                             title: '',
                                             body: '',
                                             createdAt: '',
-                                            _count: { comments: 0 }                                                                                        
+                                            author: { username: '' },
                                         });
 
-    const { id, title, body, createdAt, _count: { comments: commentCount } } = post;
+    const { id, title, body, createdAt, author: { username } } = post;
 
     const { slug } = useParams();
 
@@ -48,14 +48,14 @@ const PostPage = () => {
                 :
                 <div className="flex-col max-w-225 block mx-auto py-10 max-lg:px-[5vw]">
                     <div className="">
-                        <img src={logo} className="aspect-video"/>
+                        <img src={ logo } className="aspect-video"/>
 
                         <div className="mt-12">
                             <h2 className="text-3xl font-medium">{ title }</h2>
                         </div>
 
                         <div className="flex items-center my-8 text-gray-600">
-                            <p className="capitalize mr-4">author</p>
+                            <p className="capitalize mr-4">{ username }</p>
 
                             <p className="mr-8">{ formatDate(createdAt) }</p> 
                         </div>

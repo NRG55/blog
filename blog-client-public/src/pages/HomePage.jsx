@@ -74,7 +74,7 @@ const HomePage = () => {
                     ?
                     <p>Loading ...</p>
                     :
-                    featuredPost && <FeaturedPostCard key={`featured-post`} content={featuredPost} author={'author'}/>
+                    featuredPost && <FeaturedPostCard key={`featured-post`} post={featuredPost} />
                 }
 
                 {
@@ -91,7 +91,7 @@ const HomePage = () => {
                             {                            
                                 posts.map((post, i) => {                        
                                     return <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                                <PostCard key={`post-${i}`} content={post} author={'author'} />
+                                                <PostCard key={`post-${i}`} post={ post } />
                                             </AnimationWrapper>
                                 })
                             }                        
@@ -117,7 +117,7 @@ const HomePage = () => {
                             popularPosts.map((post, i) => {
                                 
                                 return <AnimationWrapper key={`popular-post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                            <MiniPostCard key={`popular-post-${i}`} content={post} author={'author'} />
+                                            <MiniPostCard key={`popular-post-${i}`} post={post} />
                                         </AnimationWrapper>
                             })
                         }
@@ -127,7 +127,7 @@ const HomePage = () => {
 
                 <aside className="hidden md:block md:col-start-3 md:row-start-2 md:row-end-4 sticky top-20 h-fit pr-8">
                     <div className="border border-gray-100 p-4">
-                        <h3 className="font-medium text-xl mb-6">Popular Posts</h3>
+                        <h3 className="font-medium mb-6">Popular Posts</h3>
 
                         {
                             popularPosts.length === 0 && loading 
@@ -137,7 +137,7 @@ const HomePage = () => {
                             popularPosts.map((post, i) => {
                                 
                                 return <AnimationWrapper key={`popular-post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                            <MiniPostCard key={`popular-post-${i}`} content={post} author={'author'} />
+                                            <MiniPostCard key={`popular-post-${i}`} post={post} />
                                         </AnimationWrapper>
                             }) 
                         }

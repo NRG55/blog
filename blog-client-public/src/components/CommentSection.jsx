@@ -27,7 +27,8 @@ const CommentSection = ({ postId }) => {
                                 }));
 
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            
         } finally {
             setLoading(false);
         };
@@ -37,6 +38,28 @@ const CommentSection = ({ postId }) => {
         const nextPage = page + 1;
 
         loadComments(nextPage);
+    };
+
+    const handleDelete = async (commentId, token) => {
+        try {
+            await commentService.delete(commentId, postId, token);
+
+            loadComments(1);
+            
+        } catch (error) { 
+            console.log(error); 
+        };
+    };
+
+    const handleUpdate = async (commentId, newMessage, token) => {
+        try {
+            await commentService.update(commentId, newMessage, postId, token);
+
+            loadComments(1);
+
+        } catch (error) { 
+            console.error(error); 
+        };
     };
 
     useEffect(() => {
@@ -54,7 +77,12 @@ const CommentSection = ({ postId }) => {
 
             <div className="my-8">
                 {comments.map(comment => 
-                    <CommentCard key={ comment.id } comment={ comment } />
+                    <CommentCard 
+                        key={ comment.id } 
+                        comment={ comment }
+                        onDelete={handleDelete} 
+                        onUpdate={handleUpdate} 
+                    />
                 )}
             </div>
 

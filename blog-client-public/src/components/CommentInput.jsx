@@ -6,7 +6,7 @@ const CommentInput = ({ postId, updateComments }) => {
     const [showNotice, setShowNotice] = useState(false);
     const [isFading, setIsFading] = useState(false);
 
-    const postComment = async () => {
+    const addComment = async () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = user?.token;
         const userId = user?.id;
@@ -26,7 +26,7 @@ const CommentInput = ({ postId, updateComments }) => {
         };
 
         try {
-            await commentService.postComment(userId, token, postId, comment);
+            await commentService.create(userId, token, postId, comment);
             
             setComment('');
             updateComments(1);
@@ -55,7 +55,7 @@ const CommentInput = ({ postId, updateComments }) => {
                 )}
 
                 <button
-                    onClick={postComment}
+                    onClick={addComment}
                     className="cursor-pointer bg-black text-white rounded-xs py-2 px-6 hover:opacity-80 transition"
                 >
                     Comment

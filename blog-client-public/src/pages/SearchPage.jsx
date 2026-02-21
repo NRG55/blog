@@ -65,7 +65,7 @@ const SearchPage = () => {
                         {                            
                             posts.map((post, i) => {                        
                                     return <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                                <PostCard key={`post-${i}`} content={post} author={'author'} />
+                                                <PostCard key={`post-${i}`} post={post} author={'author'} />
                                             </AnimationWrapper>
                             })
                         }                        

@@ -20,6 +20,9 @@ const postService = {
                 const featuredPost = await prisma.post.findFirst({
                     orderBy: { createdAt: 'desc' },
                     include: {
+                        author: {
+                            select: { username: true }
+                        },
                         _count: {
                             select: { comments: true }
                         }
@@ -34,6 +37,9 @@ const postService = {
                     skip: skip, 
                     orderBy: { createdAt: 'desc' },
                     include: {
+                        author: {
+                            select: { username: true }
+                        },
                         _count: {
                             select: { comments: true }
                         }
@@ -53,6 +59,9 @@ const postService = {
                 return await prisma.post.findUnique( {
                     where: { slug },
                     include: {
+                        author: {
+                            select: { username: true }
+                        },
                         _count: {
                             select: { comments: true }
                         }
@@ -109,6 +118,14 @@ const postService = {
                         take: limit,
                         skip: skip,
                         orderBy: { createdAt: 'desc' },
+                        include: {
+                            author: {
+                                select: { username: true }
+                            },
+                            _count: {
+                                select: { comments: true }                            
+                            },                        
+                        },
                     }),
                     prisma.post.count({
                         where: {

@@ -2,8 +2,15 @@ import { Link } from 'react-router';
 import logo from '../assets/logo.png';
 import formatDate from '../utils/formatDate';
 
-const FeaturedPostCard = ({ content, author }) => {
-    const { title, body, createdAt, slug, _count: { comments: commentCount = 0 } } = content;
+const FeaturedPostCard = ({ post }) => {
+    const { 
+        title, 
+        body, 
+        createdAt, 
+        slug,
+        author: { username },
+         _count: { comments: commentCount = 0 } 
+    } = post;
 
     return (
         <article className="md:flex md:col-span-3 md:p-8 gap-8">
@@ -26,7 +33,9 @@ const FeaturedPostCard = ({ content, author }) => {
                 </Link>
 
                 <div className="flex items-center text-sm text-gray-600">
-                    <p className="capitalize mr-4">{author}</p>
+                    <p className="capitalize">{username}</p>
+
+                    <div className="w-px h-4 mx-2 bg-gray-300"></div>
 
                     <p className="mr-8">{ formatDate(createdAt) }</p>
 
