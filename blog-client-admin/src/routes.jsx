@@ -2,7 +2,7 @@ import App from './App';
 import Layout from './layout/Layout';
 import { Navigate } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoot';
-import PostList from './components/PostList';
+import PostList from './pages/PostList';
 
 const routes = [
     {
