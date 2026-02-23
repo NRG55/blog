@@ -3,6 +3,7 @@ import Layout from './layout/Layout';
 import { Navigate } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoot';
 import PostList from './pages/PostList';
+import NewPost from './pages/NewPost';
 
 const routes = [
     {
@@ -22,7 +23,7 @@ const routes = [
                                 path: 'posts',
                                 children: [
                                     { index: true, element: <PostList /> },
-                                    { path: 'create', element: <h1>Create post</h1> },
+                                    { path: 'create', element: <NewPost /> },
                                     { 
                                         path: ':id',
                                         children: [
