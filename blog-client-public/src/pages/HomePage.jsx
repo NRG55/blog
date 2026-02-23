@@ -22,7 +22,7 @@ const HomePage = () => {
         setLoading(true);
 
         try {            
-            const data = await postService.getPosts(pageNumber);
+            const data = await postService.getAll(pageNumber);
 
             setPostsData(prev => ({
                                     ...prev,
@@ -33,7 +33,7 @@ const HomePage = () => {
                                 }));
 
         } catch (error) {
-            console.error('Failed to load posts: ', error);
+            console.error(error);
         } finally {
             setLoading(false);
         };
@@ -48,7 +48,8 @@ const HomePage = () => {
             setPopularPosts(data.posts);
 
         } catch (error) {
-            console.error('Failed to load popular posts: ',error);
+            console.error(error);
+            
         }finally {
             setLoading(false);
         };

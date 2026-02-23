@@ -19,7 +19,6 @@ const commentService = {
                     });                       
 
                     if (!response.ok) {
-                    
                         throw new Error('POST: Failed to fetch comment');
                     };
                     
@@ -43,29 +42,36 @@ const commentService = {
                 },
 
     delete: async function(commentId, postId, token) {
-        const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}/comments/${commentId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        if (!response.ok) throw new Error('DELETE: Failed to delete comment');
-        return true;
-    },
+                const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}/comments/${commentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('DELETE: Failed to delete comment');
+                };
+
+                return true;
+            },
 
     update: async function(commentId, newMessage, postId, token) {
+                const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}/comments/${commentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ message: newMessage })
+                });
 
-        const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}/comments/${commentId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ message: newMessage })
-        });
-        if (!response.ok) throw new Error('PUT: Failed to update comment');
-        return;
-    }
+                if (!response.ok) {
+                    throw new Error('PUT: Failed to update comment');
+                };
+
+                return;
+            }
 };
 
 export default commentService;

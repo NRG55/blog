@@ -12,12 +12,12 @@ const postController = {
                 };    
             },
 
-    getPosts: async function(req, res) {
+    getAll: async function(req, res) {
                 try {
                     const page = Number(req.query.page) || 1;
                     const limit = Number(req.query.limit) || 5;
 
-                    const data = await postService.getPosts(page, limit);
+                    const data = await postService.getAll(page, limit);
 
                     return res.status(200).json({ ...data });
 

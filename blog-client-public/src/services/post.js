@@ -1,10 +1,10 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
 const postService = {
-    getPosts: async function(pageNumber) {
-                    const params = new URLSearchParams({                         
-                        page: pageNumber.toString(),
-                        limit: '5'
+    getAll: async function(pageNumber) {
+                    const params = new URLSearchParams({
+                        limit: pageNumber === 1 ? '6' : '5',
+                        page: pageNumber.toString()
                     });       
                     
                     const response = await fetch(`${SERVER_DOMAIN}/posts?${params}`);                    
@@ -12,8 +12,13 @@ const postService = {
                     if (!response.ok) {                    
                         throw new Error('Failed to fetch posts');
                     };
-                    
-                    return await response.json();                                  
+
+                    const data = await response.json();
+
+                    const [featuredPost, ...posts] = data.posts;
+                    const totalPosts = data.totalPosts - 1; // minus featuredPost - total available for "Load more" button
+                   
+                    return { featuredPost, posts, totalPosts };                                  
                 },
 
     getPopularPosts: async function() {                       

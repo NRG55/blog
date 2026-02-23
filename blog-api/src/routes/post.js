@@ -5,7 +5,7 @@ import requireAuth from '../middleware/requireAuth.js';
 const router = express.Router();
 
 router.post('/', requireAuth, postController.create);
-router.get('/', postController.getPosts);
+router.get('/', postController.getAll);
 router.get('/slug/:slug', postController.getBySlug);
 router.put('/:postId', requireAuth, postController.update);
 router.delete('/:postId', requireAuth, postController.delete);

@@ -16,21 +16,8 @@ const postService = {
                 });
             },
 
-    getPosts: async function(page, limit) {
-                const featuredPost = await prisma.post.findFirst({
-                    orderBy: { createdAt: 'desc' },
-                    include: {
-                        author: {
-                            select: { username: true }
-                        },
-                        _count: {
-                            select: { comments: true }
-                        }
-                    }
-                });
-
-                // skip featuredPost for a page pagination (5 posts from 2 to 6, 6 to 11, ...  )
-                const skip = 1 + (page - 1) * limit;
+    getAll: async function(page, limit) {                
+                const skip = (page - 1) * limit;
 
                 const posts = await prisma.post.findMany({
                     take: limit,
@@ -48,11 +35,7 @@ const postService = {
 
                 const totalPosts = await prisma.post.count();
 
-                return { 
-                    featuredPost, 
-                    posts, 
-                    totalPosts: totalPosts - 1 // minus featuredPost - total available for "Load more" button
-                };
+                return { posts, totalPosts };
             },
 
     getBySlug: async function(slug) {
