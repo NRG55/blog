@@ -83,7 +83,7 @@ const postController = {
 
     search: async function(req, res) {
                 try {
-                   const data = await postService.search(req.query);
+                    const data = await postService.search(req.query);
 
                     return res.status(200).json({ message: 'Success', ...data });
 
@@ -91,6 +91,17 @@ const postController = {
                     return res.status(500).json({ error: error.message });
                 };   
             },
+    
+    uploadImage: async function(req, res) {
+                    try {
+                        const data = await postService.uploadImage(req.file);
+                            
+                        return res.status(200).json({ message: 'Success', location: data.secure_url });
+
+                    } catch (error) {
+                        return res.status(500).json({ error: error.message });
+                    };   
+                },
 };
 
 export default postController;

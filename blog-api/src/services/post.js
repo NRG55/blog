@@ -1,5 +1,6 @@
 import prisma from "../config/prisma.js";
 import generateSlug from "../utils/generateSlug.js";
+import cloudinary from "../config/cloudinary.js";
 
 const postService = {
     create: async function(authorId, { title, body }) {
@@ -122,6 +123,22 @@ const postService = {
 
                 return { posts: [...posts], totalPosts }
             },
+
+    uploadImage: async function(file) {
+                    if (!file) {
+                        throw new Error('No file provided');
+                    };
+
+                    const bufferStringBase64 = Buffer.from(file.buffer).toString('base64');
+                    const dataURI = 'data:' + file.mimetype + ';base64,' + bufferStringBase64;
+
+                    const result = await cloudinary.uploader.upload(dataURI, {
+                        folder: 'blog',
+                        resource_type: 'auto',
+                    });
+
+                    return result;
+                },
 };
 
 export default postService;
