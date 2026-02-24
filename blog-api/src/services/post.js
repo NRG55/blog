@@ -139,6 +139,10 @@ const postService = {
 
                     return result;
                 },
+
+    deleteImage: async function(imagePublicId) {
+                    return await cloudinary.uploader.destroy(imagePublicId);
+                },
 };
 
 export default postService;

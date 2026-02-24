@@ -96,11 +96,24 @@ const postController = {
                     try {
                         const data = await postService.uploadImage(req.file);
                             
-                        return res.status(200).json({ message: 'Success', location: data.secure_url });
+                        return res.status(200).json({ message: 'Success', location: data.secure_url, public_id: data.public_id });
 
                     } catch (error) {
                         return res.status(500).json({ error: error.message });
                     };   
+                },
+
+    deleteImage: async function(req, res) {
+                    const { imagePublicId } = req.body;
+
+                    try {
+                        const result = await postService.deleteImage(imagePublicId);
+
+                        res.json({ message: 'Image deleted from cloudinary', result });
+
+                    } catch (error) {
+                        res.status(500).json({ error: 'Delete image from cloudinary failed' });
+                    };
                 },
 };
 
