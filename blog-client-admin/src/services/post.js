@@ -15,6 +15,18 @@ const postService = {
                     
                     return await response.json();                                  
                 },
+    uploadImage: async function(data) {                       
+                        const response = await fetch(`${SERVER_DOMAIN}/posts/upload-image`, {
+                            method: 'POST',
+                            body: data
+                        });
+
+                        if (!response.ok) {                        
+                            throw new Error('Failed to upload image');
+                        };
+                        
+                        return await response.json();
+                    },
 };
 
 export default postService;

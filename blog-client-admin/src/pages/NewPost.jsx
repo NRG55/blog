@@ -1,9 +1,12 @@
 import { useState, useRef } from 'react';
 import Editor from '../components/Editor';
+import postService from '../services/post';
 
 const NewPost = () => {
+    const [ isUploading, setIsUploading ] = useState(false);
     const [ formData, setFormData ] = useState({
         title: '',
+        imageUrl: '',
         published: false
     });
 
@@ -30,11 +33,86 @@ const NewPost = () => {
         //TODO: post service create method
     };
 
+    const handleImageUpload = async (event) => {
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        setIsUploading(true);
+
+        const data = new FormData();
+
+        data.append('file', file);
+
+        try {            
+            const result = await postService.uploadImage(data);
+            
+            setFormData(prev => ({ ...prev, imageUrl: result.location }));
+
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            setIsUploading(false);
+        };
+    };
+
+    const handleRemoveImage = () => {
+        setFormData(prev => ({ ...prev, imageUrl: '' }));
+ 
+        const fileInput = document.getElementById('mainImageInput');
+
+        if (fileInput) {
+            fileInput.value = '';
+        };
+    };
+
     return (
         <div className="max-w-4xl mx-auto p-6">
             <h1 className="text-2xl mb-6">Create New Post</h1>
             
             <form onSubmit={ handleSubmit } className="space-y-4">
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Main Image
+                    </label>
+                    
+                    {
+                        formData.imageUrl 
+                        &&
+                        <div className="relative w-full h-64 mb-2 bg-gray-100 rounded-xs overflow-hidden border border-gray-100">
+                            <img 
+                                src={formData.imageUrl} 
+                                alt="Featured preview" 
+                                className="w-full h-full object-cover" 
+                            />
+                            
+                            <button
+                                type="button"
+                                onClick={handleRemoveImage}
+                                className="absolute top-2 right-2 px-2 py-1 text-gray-600 border border-gray-600 bg-white rounded-xs font-bold hover:opacity-80 transition"
+                            >
+                               &#x2715;
+                            </button>
+                        </div>
+                    }
+
+                    <input
+                        id="mainImageInput"
+                        type="file"
+                        accept="image/*"
+                        onChange={ handleImageUpload }
+                        className="block w-full text-sm text-gray-400 file:text-gray-800 file:mr-4 file:py-1 file:px-2 file:rounded-xs file:border file:border-gray-400 hover:file:opacity-80"
+                    />
+
+                    {
+                        isUploading 
+                        && 
+                        <p className="text-xs text-gray-500 mt-1">
+                            Uploading to Cloudinary...
+                        </p>}
+                </div>
+
                 <div>
                     <label className="block text-sm font-medium text-gray-700">
                         Title
@@ -44,7 +122,7 @@ const NewPost = () => {
                         type="text"
                         name="title"
                         required
-                        className="mt-1 block w-full border border-gray-100 rounded-xs p-2"
+                        className="mt-1 block w-full border border-gray-200 rounded-xs p-2"
                         onChange={ handleInputChange }
                     />
                 </div>
@@ -67,7 +145,7 @@ const NewPost = () => {
                     />
                     <label 
                         htmlFor="publish-checkbox"
-                        className="ml-2 block text-sm"
+                        className="ml-2 block text-sm font-medium text-gray-700"
                     >
                         Publish
                     </label>
