@@ -27,6 +27,16 @@ const postService = {
                         
                         return await response.json();
                     },
+
+    deleteImage: async function(imagePublicId) {
+                    const response = await fetch(`${SERVER_DOMAIN}/posts/delete-image`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imagePublicId })
+                    });
+
+                    return await response.json();
+                },
 };
 
 export default postService;

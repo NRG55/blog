@@ -7,6 +7,7 @@ const NewPost = () => {
     const [ formData, setFormData ] = useState({
         title: '',
         imageUrl: '',
+        imagePublicId: '',
         published: false
     });
 
@@ -46,8 +47,12 @@ const NewPost = () => {
 
         try {            
             const result = await postService.uploadImage(data);
-            
-            setFormData(prev => ({ ...prev, imageUrl: result.location }));
+   
+            setFormData(prev => ({ 
+                ...prev, 
+                imageUrl: result.location,
+                imagePublicId: result.public_id
+            }));
 
         } catch (error) {
             console.log(error);
@@ -57,8 +62,21 @@ const NewPost = () => {
         };
     };
 
-    const handleRemoveImage = () => {
-        setFormData(prev => ({ ...prev, imageUrl: '' }));
+    const handleDeleteImage = async () => {
+        if (formData.imagePublicId) {
+            try {
+                await postService.deleteImage(formData.imagePublicId);
+
+            } catch (error) {
+                console.log(error);
+            };
+        };
+
+        setFormData(prev => ({ 
+            ...prev, 
+            imageUrl: '', 
+            imagePublicId: '' 
+        }));
  
         const fileInput = document.getElementById('mainImageInput');
 
@@ -82,14 +100,14 @@ const NewPost = () => {
                         &&
                         <div className="relative w-full h-64 mb-2 bg-gray-100 rounded-xs overflow-hidden border border-gray-100">
                             <img 
-                                src={formData.imageUrl} 
+                                src={ formData.imageUrl } 
                                 alt="Featured preview" 
                                 className="w-full h-full object-cover" 
                             />
                             
                             <button
                                 type="button"
-                                onClick={handleRemoveImage}
+                                onClick={ handleDeleteImage }
                                 className="absolute top-2 right-2 px-2 py-1 text-gray-600 border border-gray-600 bg-white rounded-xs font-bold hover:opacity-80 transition"
                             >
                                &#x2715;
