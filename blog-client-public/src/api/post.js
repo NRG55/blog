@@ -1,6 +1,6 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-const postService = {
+const postApiService = {
     getAll: async function(pageNumber) {
                     const params = new URLSearchParams({
                         limit: pageNumber === 1 ? '6' : '5',
@@ -60,4 +60,4 @@ const postService = {
                     },
 };
 
-export default postService;
+export default postApiService;

@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import commentService from '../services/comment';
+import commentApiService from '../api/comment';
+import { useAuth } from '../context/AuthContext';
+import { Link, useLocation } from 'react-router';
 
 const CommentInput = ({ postId, updateComments }) => {
-    const [comment, setComment] = useState('');
-    const [showNotice, setShowNotice] = useState(false);
-    const [isFading, setIsFading] = useState(false);
+    const { user, token } = useAuth();
+    const [ comment, setComment ] = useState('');
+    const [ showNotice, setShowNotice ] = useState(false);
+    const [ isFading, setIsFading ] = useState(false);
+    const location = useLocation();
 
     const addComment = async () => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = user?.token;
-        const userId = user?.id;
-
-        if (!token) {
+        if (!user) {
             setShowNotice(true);
             setIsFading(false);
 
@@ -26,7 +26,7 @@ const CommentInput = ({ postId, updateComments }) => {
         };
 
         try {
-            await commentService.create(userId, token, postId, comment);
+            await commentApiService.create(user.id, token, postId, comment);
             
             setComment('');
             updateComments(1);
@@ -50,7 +50,7 @@ const CommentInput = ({ postId, updateComments }) => {
                 {showNotice && (
                     <div className={`absolute bottom-full left-0 mb-3 px-4 py-2 bg-white border border-gray-100 text-gray-600 text-sm rounded-xs shadow-xl whitespace-nowrap transition-opacity duration-500 
                                     ${isFading ? 'opacity-0' : 'opacity-100'}`}>
-                        Please log in to leave a comment                        
+                        Please <Link to="/auth/login" state={{ from: location }} className="font-bold underline">log in</Link> to leave a comment                        
                     </div>
                 )}
 

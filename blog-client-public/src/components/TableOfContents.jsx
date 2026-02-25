@@ -41,7 +41,7 @@ const TableOfContents = ({ routes, defaultHidden = [], defaultActiveIndex = 0, c
 
     return (
         <>
-            <div ref={containerRef} className="relative flex md:col-span-2 mb-8 border-b border-gray-100">
+            <div ref={containerRef} className="relative flex h-fit md:col-span-2 mb-8 border-b border-gray-100">
                 {routes.map((route, i) => (
                     <button
                         key={`content-button-${i}`}                                

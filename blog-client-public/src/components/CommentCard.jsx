@@ -1,14 +1,13 @@
-import { UserContext } from "../context/UserContextProvider";
-import { useContext, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 import formatDate from "../utils/formatDate";
 
 const CommentCard = ({ comment, onDelete, onUpdate }) => {
+    const { user, token } = useAuth();
     const [ isEditing, setIsEditing ] = useState(false);
     const [ editedMessage, setEditedMessage ] = useState(comment.message);
 
-    const { user } = useContext(UserContext);
-    const isOwner = user?.id === comment.userId;
-    const token = user?.token;
+    const isOwner = user && user.id === comment.user.id;
 
     const handleSave = async () => {
         if (!token) {

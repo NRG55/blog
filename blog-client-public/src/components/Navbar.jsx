@@ -1,18 +1,15 @@
 import { Link, useNavigate } from "react-router";
 import logo from '../assets/logo.png';
-import { useContext, useState } from "react";
-import { UserContext } from "../context/UserContextProvider";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
-    const { user, setUser } = useContext(UserContext);
-
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
-
-    const logout = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-
+    
+    const handleLogout = () => {
+        logout();
         navigate("/");
     };
 
@@ -71,7 +68,7 @@ const Navbar = () => {
                     user
                     ?
                     <button
-                        onClick={logout}
+                        onClick={handleLogout}
                         className="whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60"
                     >
                         Log out

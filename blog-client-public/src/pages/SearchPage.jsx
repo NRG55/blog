@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import AnimationWrapper from "../components/AnimationWrapper";
-import postService from "../services/post";
+import postApiService from "../api/post";
 import PostCard from "../components/PostCard";
 
 const SearchPage = () => {
@@ -21,7 +21,7 @@ const SearchPage = () => {
         setLoading(true);
 
         try {            
-            const data = await postService.searchPosts(query, pageNumber);
+            const data = await postApiService.searchPosts(query, pageNumber);
 
             setPostsData(prev => ({
                                     ...prev,                                    
@@ -49,7 +49,7 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="flex-1 flex-col justify-center px-8">
+        <div className="grow flex-col justify-center px-8">
             {
                 posts.length === 0 && loading 
                 ?

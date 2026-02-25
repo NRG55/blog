@@ -1,6 +1,6 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-const commentService = {
+const commentApiService = {
     create: async function(userId, token, postId, comment) {                       
                     const commentData = { 
                         userId,
@@ -74,4 +74,4 @@ const commentService = {
             }
 };
 
-export default commentService;
+export default commentApiService;

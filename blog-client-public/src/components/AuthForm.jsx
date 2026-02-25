@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 import Input from "./Input";
 
-const AuthForm = ({ type, handleSubmit, errors }) => {
+const AuthForm = ({ type, onSubmit, errors }) => {
 
     return (
         <form
-            onSubmit={handleSubmit} 
+            onSubmit={onSubmit} 
             className="w-[80%] max-w-100 -mt-60"
         >
             <h1 className="text-3xl text-center mb-18">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import commentService from '../services/comment';
+import commentApiService from '../api/comment';
 import CommentInput from './CommentInput';
 import CommentCard from './CommentCard';
 
@@ -17,7 +17,7 @@ const CommentSection = ({ postId }) => {
         setLoading(true);
 
         try {
-            const data = await commentService.getByPostId(postId, pageNumber);
+            const data = await commentApiService.getByPostId(postId, pageNumber);
 
             setCommentsData(prev => ({
                                     ...prev,
@@ -42,7 +42,7 @@ const CommentSection = ({ postId }) => {
 
     const handleDelete = async (commentId, token) => {
         try {
-            await commentService.delete(commentId, postId, token);
+            await commentApiService.delete(commentId, postId, token);
 
             loadComments(1);
             
@@ -53,7 +53,7 @@ const CommentSection = ({ postId }) => {
 
     const handleUpdate = async (commentId, newMessage, token) => {
         try {
-            await commentService.update(commentId, newMessage, postId, token);
+            await commentApiService.update(commentId, newMessage, postId, token);
 
             loadComments(1);
 

@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import postService from "../services/post";
+import postApiService from "../api/post";
 import { useEffect, useState } from "react";
 import AnimationWrapper from "../components/AnimationWrapper";
 import logo from '../assets/logo.png';
@@ -24,7 +24,7 @@ const PostPage = () => {
         setLoading(true);
 
         try {
-            const data = await postService.getPostBySlug(slug);
+            const data = await postApiService.getPostBySlug(slug);
 
             setPost(data.post);
 
@@ -46,7 +46,7 @@ const PostPage = () => {
                 ?
                 <p>Loading...</p>
                 :
-                <div className="flex-col max-w-225 block mx-auto py-10 max-lg:px-[5vw]">
+                <div className="grow flex-col max-w-225 block mx-auto py-10 max-lg:px-[5vw]">
                     <div className="">
                         <img src={ logo } className="aspect-video"/>
 

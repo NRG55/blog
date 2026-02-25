@@ -1,38 +1,42 @@
 import AuthForm from '../components/AuthForm';
 import AnimationWrapper from '../components/AnimationWrapper';
-import authService from '../services/auth';
-import { useState, useContext } from 'react';
-import { UserContext } from '../context/UserContextProvider';
-import { Navigate } from 'react-router';
+import authApiService from '../api/auth';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
+import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => { 
     const [ errors, setErrors ] = useState([]);
-    const { user, setUser } = useContext(UserContext);
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleSubmit = async (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();        
 
         const userData = Object.fromEntries(new FormData(event.target));       
 
         try {
-            await authService.authenticate(userData, setUser, 'login');
+            const result = await authApiService.authenticate(userData, 'login');
+
+            login(result.user, result.token);                
+            
+            const origin = location.state?.from?.pathname || "/";
+
+            navigate(origin, { replace: true });
 
         } catch (error) {
-            setErrors(error.cause);          
+            setErrors(error.cause || [{ msg: error.message }]);          
         };       
     };
 
     return (
-        user
-        ?
-        <Navigate to='/'/>
-        :
         <AnimationWrapper>
-            <section className="flex-1 flex items-center justify-center">
+            <section className="grow flex items-center justify-center">
                 <AuthForm 
                     type="login"
-                    handleSubmit={handleSubmit}
-                    errors={errors} 
+                    onSubmit={handleLogin}
+                    errors={ errors } 
                 />
             </section>
         </AnimationWrapper>               
