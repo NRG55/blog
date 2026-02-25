@@ -1,5 +1,5 @@
 const authApiService = {
-    authenticate: async function(userData,authMode ) {
+    authenticate: async function(userData, authMode ) {
                     const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
                     // authMode: 'signup' or 'login'
                     const response = await fetch(`${SERVER_DOMAIN}/auth/${authMode}`, {

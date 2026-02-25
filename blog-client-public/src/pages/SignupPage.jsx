@@ -11,13 +11,13 @@ const SignupPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const handleSubmit = async (event) => {
+    const handleSignup = async (event) => {
         event.preventDefault();        
 
         const userData = Object.fromEntries(new FormData(event.target));       
 
         try {
-            const result = await authApiService.authenticate(userData, setUser, 'signup');
+            const result = await authApiService.authenticate(userData, 'signup');
 
             login(result.user, result.token);                
             
@@ -26,8 +26,10 @@ const SignupPage = () => {
             navigate(origin, { replace: true });
 
         } catch (error) {
-            setErrors(error.cause);          
-        } ;       
+            const errorList = Array.isArray(error.cause)
+                                ? error.cause
+                                : [{ msg: error.message }];
+        };       
     }; 
 
     return (
@@ -35,7 +37,7 @@ const SignupPage = () => {
             <section className="grow flex items-center justify-center">
                 <AuthForm 
                     type="signup"
-                    handleSubmit={handleSubmit}
+                    onSubmit={handleSignup}
                     errors={ errors } 
                 />
             </section>

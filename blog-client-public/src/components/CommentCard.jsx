@@ -7,7 +7,7 @@ const CommentCard = ({ comment, onDelete, onUpdate }) => {
     const [ isEditing, setIsEditing ] = useState(false);
     const [ editedMessage, setEditedMessage ] = useState(comment.message);
 
-    const isOwner = user && user.id === comment.user.id;
+    const isOwner = user && user.id === comment.userId;
 
     const handleSave = async () => {
         if (!token) {

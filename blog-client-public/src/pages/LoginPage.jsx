@@ -26,7 +26,11 @@ const LoginPage = () => {
             navigate(origin, { replace: true });
 
         } catch (error) {
-            setErrors(error.cause || [{ msg: error.message }]);          
+            const errorList = Array.isArray(error.cause) 
+                                ? error.cause 
+                                : [{ msg: error.message }];
+        
+    setErrors(errorList);          
         };       
     };
 

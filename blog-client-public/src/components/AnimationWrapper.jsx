@@ -6,7 +6,7 @@ const AnimationWrapper = (
         initial = { opacity: 0 }, 
         animate = { opacity: 1 },
         transition = { duration: .5 },
-        className = "flex-1 flex" 
+        className = "flex-1 flex flex-col" 
     }
 ) => {
     return (

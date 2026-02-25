@@ -19,12 +19,22 @@ const CommentSection = ({ postId }) => {
         try {
             const data = await commentApiService.getByPostId(postId, pageNumber);
 
-            setCommentsData(prev => ({
-                                    ...prev,
-                                    comments: pageNumber === 1 ? data.comments : [...prev.comments, ...data.comments],
-                                    totalComments: data.totalComments,
-                                    page: pageNumber
-                                }));
+            setCommentsData(prev => {
+                const allComments = pageNumber === 1 
+                    ? data.comments 
+                    : [...prev.comments, ...data.comments];
+                
+                const uniqueComments = [
+                    ...new Map(allComments.map(comment => [comment.id, comment])).values()
+                ];
+
+                return {
+                    ...prev,
+                    comments: uniqueComments,
+                    totalComments: data.totalComments,
+                    page: pageNumber
+                };
+            });
 
         } catch (error) {
             console.log(error);
@@ -40,11 +50,23 @@ const CommentSection = ({ postId }) => {
         loadComments(nextPage);
     };
 
+    const handleNewComment = (newComment) => {
+        setCommentsData(prev => ({
+            ...prev,
+            comments: [newComment, ...prev.comments],
+            totalComments: prev.totalComments + 1
+        }));
+    };
+
     const handleDelete = async (commentId, token) => {
         try {
             await commentApiService.delete(commentId, postId, token);
 
-            loadComments(1);
+            setCommentsData(prev => ({
+                ...prev,
+                comments: prev.comments.filter(comment => comment.id !== commentId),
+                totalComments: prev.totalComments - 1
+            }));
             
         } catch (error) { 
             console.log(error); 
@@ -55,10 +77,15 @@ const CommentSection = ({ postId }) => {
         try {
             await commentApiService.update(commentId, newMessage, postId, token);
 
-            loadComments(1);
+            setCommentsData(prev => ({
+                ...prev,
+                comments: prev.comments.map(comment => 
+                    comment.id === commentId ? { ...comment, message: newMessage } : comment
+                )
+            }));
 
         } catch (error) { 
-            console.error(error); 
+            console.log(error); 
         };
     };
 
@@ -71,7 +98,9 @@ const CommentSection = ({ postId }) => {
 
     return (
         <div className="mt-12">
-            <h3 className="mb-2 text-xl text-gray-500">Comments ({totalComments})</h3>
+            <h3 className="mb-2 text-xl text-gray-500">
+                Comments ({ totalComments })
+            </h3>
 
             <hr className="mb-6 text-gray-100"/>            
 
@@ -80,8 +109,8 @@ const CommentSection = ({ postId }) => {
                     <CommentCard 
                         key={ comment.id } 
                         comment={ comment }
-                        onDelete={handleDelete} 
-                        onUpdate={handleUpdate} 
+                        onDelete={ handleDelete } 
+                        onUpdate={ handleUpdate } 
                     />
                 )}
             </div>
@@ -90,15 +119,15 @@ const CommentSection = ({ postId }) => {
                 comments.length < totalComments
                 && 
                 <button 
-                    onClick={loadMoreComments}
-                    disabled={loading}
+                    onClick={ loadMoreComments }
+                    disabled={ loading }
                     className="mb-12 block underline underline-offset-6 text-sm tracking-widest font-medium hover:opacity-60 disabled:opacity-30"
                 >
                     {loading ? "Loading..." : "Load more"}                                   
                 </button>
             }
 
-            <CommentInput postId={ postId } updateComments={ loadComments } />
+            <CommentInput postId={ postId } onCommentAdded={ handleNewComment } />
         </div>        
     );
 };

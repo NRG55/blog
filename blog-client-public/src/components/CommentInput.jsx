@@ -3,7 +3,7 @@ import commentApiService from '../api/comment';
 import { useAuth } from '../context/AuthContext';
 import { Link, useLocation } from 'react-router';
 
-const CommentInput = ({ postId, updateComments }) => {
+const CommentInput = ({ postId, onCommentAdded }) => {
     const { user, token } = useAuth();
     const [ comment, setComment ] = useState('');
     const [ showNotice, setShowNotice ] = useState(false);
@@ -26,10 +26,10 @@ const CommentInput = ({ postId, updateComments }) => {
         };
 
         try {
-            await commentApiService.create(user.id, token, postId, comment);
-            
+            const data = await commentApiService.create(user.id, token, postId, comment);
+
             setComment('');
-            updateComments(1);
+            onCommentAdded(data.comment);
                 
         } catch (error) {
             console.error(error);

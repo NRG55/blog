@@ -1,11 +1,12 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import logo from '../assets/logo.png';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
     const { user, logout } = useAuth();
+    const location = useLocation();
     const navigate = useNavigate();
     
     const handleLogout = () => {
@@ -29,6 +30,10 @@ const Navbar = () => {
             };
         };
     };
+
+    useEffect(() => {
+        setSearchBoxVisibility(false);
+    }, [location]);
 
     return (
         <nav className="max-w-7xl mx-auto z-10 sticky top-0 flex item-center gap-12 w-full px-[5vw] py-5 border-b border-gray-100 bg-white">
@@ -75,15 +80,22 @@ const Navbar = () => {
                     </button>
                     :
                     <>
-                        <Link to="auth/login" className="whitespace-nowrap bg-black text-white rounded-xs py-2 px-6 capitalize hover:bg-black/80">
+                        <Link 
+                            to="auth/login" 
+                            state={{ from: location }} 
+                            className="whitespace-nowrap bg-black text-white rounded-xs py-2 px-6 capitalize hover:bg-black/80"
+                        >
                             Log in
                         </Link>
-                        <Link to="auth/signup" className="hidden md:block whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60">
+                        <Link 
+                            to="auth/signup" 
+                            state={{ from: location }}
+                            className="hidden md:block whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60"
+                        >
                             Sign up
                         </Link>
                     </>
-                }
-                
+                }                
             </div>            
         </nav>
     )
