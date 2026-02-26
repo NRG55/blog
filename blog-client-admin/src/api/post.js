@@ -15,9 +15,12 @@ const postService = {
                     
                     return await response.json();                                  
                 },
-    uploadImage: async function(data) {                       
-                        const response = await fetch(`${SERVER_DOMAIN}/posts/upload-image`, {
+    uploadImage: async function(data, token) {                     
+                        const response = await fetch(`${SERVER_DOMAIN}/admin/posts/upload-image`, {
                             method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            },
                             body: data
                         });
 
@@ -28,10 +31,13 @@ const postService = {
                         return await response.json();
                     },
 
-    deleteImage: async function(imagePublicId) {
-                    const response = await fetch(`${SERVER_DOMAIN}/posts/delete-image`, {
+    deleteImage: async function(imagePublicId, token) {
+                    const response = await fetch(`${SERVER_DOMAIN}/admin/posts/delete-image`, {
                         method: 'DELETE',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` 
+                        },
                         body: JSON.stringify({ imagePublicId })
                     });
 

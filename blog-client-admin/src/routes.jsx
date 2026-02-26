@@ -4,6 +4,7 @@ import { Navigate } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoot';
 import PostList from './pages/PostList';
 import NewPost from './pages/NewPost';
+import LoginPage from './pages/LoginPage';
 
 const routes = [
     {
@@ -14,7 +15,7 @@ const routes = [
                 element: <Layout />,
                 children: [
                     { index: true, element: <Navigate to="/auth/login" replace /> },                    
-                    { path: 'auth/login', element: <h1>Login</h1> },                    
+                    { path: 'auth/login', element: <LoginPage /> },                    
 
                     {
                         element: <ProtectedRoute />,

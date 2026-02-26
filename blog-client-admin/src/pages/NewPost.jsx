@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import Editor from '../components/Editor';
-import postService from '../services/post';
+import postService from '../api/post';
+import { useAuth } from '../context/AuthContext';
 
 const NewPost = () => {
     const [ isUploading, setIsUploading ] = useState(false);
@@ -11,6 +12,7 @@ const NewPost = () => {
         published: false
     });
 
+    const { token } = useAuth();
     const editorRef = useRef(null);
 
     const handleInputChange = (event) => {
@@ -46,7 +48,7 @@ const NewPost = () => {
         data.append('file', file);
 
         try {            
-            const result = await postService.uploadImage(data);
+            const result = await postService.uploadImage(data, token);
    
             setFormData(prev => ({ 
                 ...prev, 
@@ -65,7 +67,7 @@ const NewPost = () => {
     const handleDeleteImage = async () => {
         if (formData.imagePublicId) {
             try {
-                await postService.deleteImage(formData.imagePublicId);
+                await postService.deleteImage(formData.imagePublicId, token);
 
             } catch (error) {
                 console.log(error);

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import postService from "../services/post";
+import postService from "../api/post";
 import { useEffect } from "react";
 import PostRow from "../components/PostRow";
 
