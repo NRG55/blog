@@ -12,9 +12,9 @@ const signup = async ({ username, password }) => {
         }
     });
 
-    user.token = generateToken(user);
+    const token = generateToken(user);
 
-    return user;
+    return { user, token };
 };
 
 const login = async ({ username, password }) => {
@@ -34,9 +34,9 @@ const login = async ({ username, password }) => {
 
     const { password: _, ...user } = userData;
 
-    user.token = generateToken(user);
+    const token = generateToken(user);
 
-    return user;
+    return { user, token };
 };
 
 export default { signup, login };

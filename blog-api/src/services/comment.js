@@ -6,8 +6,16 @@ const commentService = {
                     data: {
                         userId,
                         postId,
-                        message,
+                        message,                        
                     },
+                    include: {
+                        user: {
+                            select: {                                        
+                                username: true,
+                                id: true
+                            }
+                        }
+                    }
                 });
             },
 
@@ -23,10 +31,11 @@ const commentService = {
                             include: {
                                 user: {
                                     select: {
-                                        username: true
+                                        username: true,
+                                        id: true
                                     }
                                 }
-            }
+                            }
                         }),
 
                         prisma.comment.count({
