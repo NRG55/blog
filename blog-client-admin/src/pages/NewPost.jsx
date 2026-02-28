@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import Editor from '../components/Editor';
-import postService from '../api/post';
+import postApiService from '../api/post';
 import { useAuth } from '../context/AuthContext';
 
 const NewPost = () => {
@@ -48,7 +48,7 @@ const NewPost = () => {
         data.append('file', file);
 
         try {            
-            const result = await postService.uploadImage(data, token);
+            const result = await postApiService.uploadImage(data, token);
    
             setFormData(prev => ({ 
                 ...prev, 
@@ -67,7 +67,7 @@ const NewPost = () => {
     const handleDeleteImage = async () => {
         if (formData.imagePublicId) {
             try {
-                await postService.deleteImage(formData.imagePublicId, token);
+                await postApiService.deleteImage(formData.imagePublicId, token);
 
             } catch (error) {
                 console.log(error);
@@ -88,7 +88,7 @@ const NewPost = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="w-full max-w-4xl mt-10 mx-auto p-6">
             <h1 className="text-2xl mb-6">Create New Post</h1>
             
             <form onSubmit={ handleSubmit } className="space-y-4">

@@ -1,6 +1,6 @@
 import { Editor as TinyMCE } from '@tinymce/tinymce-react';
 import { useAuth } from '../context/AuthContext';
-import postService from '../api/post';
+import postApiService from '../api/post';
 import { useRef } from 'react';
 
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
@@ -64,7 +64,7 @@ const Editor = ({ onInit }) => {
                 setup: (editor) => {
                     editor.ui.registry.addButton('deleteimage', {
                         icon: 'remove',
-                        tooltip: 'Delete Image from Cloudinary',
+                        tooltip: 'Delete from Cloudinary',
                         onAction: async () => {
                             const node = currentImageRef.current;
                             
@@ -78,7 +78,7 @@ const Editor = ({ onInit }) => {
                                 };
 
                                 try {
-                                    await postService.deleteImage(publicId, token);
+                                    await postApiService.deleteImage(publicId, token);
                                     
                                     node.remove();
                                     editor.nodeChanged();
