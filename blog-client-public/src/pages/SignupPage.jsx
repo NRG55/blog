@@ -29,6 +29,8 @@ const SignupPage = () => {
             const errorList = Array.isArray(error.cause)
                                 ? error.cause
                                 : [{ msg: error.message }];
+
+            setErrors(errorList);                    
         };       
     }; 
 

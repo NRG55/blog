@@ -25,8 +25,8 @@ const HomePage = () => {
 
             try {
                 const [ postsResult, popularPostsResult ] = await Promise.all([
-                    postApiService.getAll(1),
-                    postApiService.getPopularPosts()
+                    postApiService.getAll(1, 'true'),
+                    postApiService.getPopular()
                 ]);
 
                 setPostsData({
@@ -36,7 +36,7 @@ const HomePage = () => {
                     page: 1
                 });
 
-                setPopularPosts(popularPostsResult.posts);
+                setPopularPosts(popularPostsResult);
 
             } catch (error) {
                 console.error(error);
@@ -55,7 +55,7 @@ const HomePage = () => {
         setIsMoreLoading(true);
 
         try {
-            const postsResult = await postApiService.getAll(nextPage);
+            const postsResult = await postApiService.getAll(nextPage, 'true'); // true - only published
 
             setPostsData(prev => ({
                 ...prev,

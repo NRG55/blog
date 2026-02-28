@@ -3,7 +3,7 @@ import generateSlug from "../utils/generateSlug.js";
 import cloudinary from "../config/cloudinary.js";
 
 const postService = {
-    create: async function(authorId, { title, body }) {
+    create: async function(authorId, { title, body, published }) {
                 const slug = await generateSlug(title);
 
                 return await prisma.post.create({
@@ -12,15 +12,21 @@ const postService = {
                         slug,
                         title,
                         body,
-                        published: true,
+                        published,
                     },
                 });
             },
 
-    getAll: async function(page, limit) {                
+    getAll: async function(page, limit, published) {                
                 const skip = (page - 1) * limit;
+                const where = {};
+
+                if (published !== undefined) {
+                    where.published = published;
+                };
 
                 const posts = await prisma.post.findMany({
+                    where,
                     take: limit,
                     skip: skip, 
                     orderBy: { createdAt: 'desc' },
@@ -34,10 +40,34 @@ const postService = {
                     },
                 });
 
-                const totalPosts = await prisma.post.count();
+                const totalPosts = await prisma.post.count({ where });
 
                 return { posts, totalPosts };
             },
+
+    getPopular: async function() {
+        const posts = await prisma.post.findMany({
+            where: {
+                published: true
+            },
+            take: 5,
+            orderBy: {
+                comments: {
+                    _count: 'desc'
+                }
+            },
+            include: {
+                author: {
+                    select: { username: true }
+                },
+                _count: {
+                    select: { comments: true }
+                }
+            }
+        });
+
+        return posts;
+    },
 
     getBySlug: async function(slug) {
                 return await prisma.post.findUnique( {

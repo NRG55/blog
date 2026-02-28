@@ -30,7 +30,7 @@ const LoginPage = () => {
                                 ? error.cause 
                                 : [{ msg: error.message }];
         
-    setErrors(errorList);          
+            setErrors(errorList);          
         };       
     };
 

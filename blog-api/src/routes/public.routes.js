@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Post routes
 router.get('/posts', postController.getAll);
+router.get('/posts/popular', postController.getPopular);
 router.get('/posts/search', postController.search);
 router.get('/posts/slug/:slug', postController.getBySlug);
 

@@ -33,7 +33,7 @@ const PostCard = ({ post }) => {
                     <div className="w-px h-4 bg-gray-300"></div>
                     <p>{ formatDate(createdAt) }</p>
                     <div className="w-4 h-8 flex items-center justify-center ml-auto">
-                        <i className="fi fi-rr-comment-dots h-4"></i>                        
+                        <i className="fi fi-rr-comment-dots h-4"></i>
                     </div>
                     <span>{ commentCount }</span>                    
                 </div>

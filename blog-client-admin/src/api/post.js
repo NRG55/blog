@@ -1,6 +1,23 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-const postService = {
+const postApiService = {
+    create: async function(postData, token) {
+                const response = await fetch(`${SERVER_DOMAIN}/admin/posts`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to create post');
+                }
+
+                return await response.json();
+            },
     getAll: async function(pageNumber) {
                     const params = new URLSearchParams({                         
                         page: pageNumber.toString(),
@@ -15,6 +32,7 @@ const postService = {
                     
                     return await response.json();                                  
                 },
+
     uploadImage: async function(data, token) {                     
                         const response = await fetch(`${SERVER_DOMAIN}/admin/posts/upload-image`, {
                             method: 'POST',
@@ -45,4 +63,4 @@ const postService = {
                 },
 };
 
-export default postService;
+export default postApiService;

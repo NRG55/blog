@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from "react-router";
 import Editor from '../components/Editor';
 import postApiService from '../api/post';
 import { useAuth } from '../context/AuthContext';
@@ -14,6 +15,7 @@ const NewPost = () => {
 
     const { token } = useAuth();
     const editorRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -32,8 +34,19 @@ const NewPost = () => {
             body: editorRef.current ? editorRef.current.getContent() : ''
         };
 
-        console.log(postData);
-        //TODO: post service create method
+        try {
+            setIsUploading(true);
+
+            await postApiService.create(postData, token);
+
+            navigate('/posts'); 
+            
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            setIsUploading(false);
+        };
     };
 
     const handleImageUpload = async (event) => {

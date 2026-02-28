@@ -1,12 +1,16 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
 const postApiService = {
-    getAll: async function(pageNumber) {
+    getAll: async function(pageNumber, published) {
                     const params = new URLSearchParams({
                         limit: pageNumber === 1 ? '6' : '5',
                         page: pageNumber.toString()
-                    });       
+                    });
                     
+                    if (published !== undefined) {
+                        params.append('published', published);
+                    };
+
                     const response = await fetch(`${SERVER_DOMAIN}/posts?${params}`);                    
 
                     if (!response.ok) {                    
@@ -21,16 +25,15 @@ const postApiService = {
                     return { featuredPost, posts, totalPosts };                                  
                 },
 
-    getPopularPosts: async function() {                       
-                        const response = await fetch(`${SERVER_DOMAIN}/posts`);                       
+    getPopular: async function() {
+                    const response = await fetch(`${SERVER_DOMAIN}/posts/popular`);
 
-                        if (!response.ok) {
-                        
-                            throw new Error('Failed to fetch popular posts');
-                        };
-                        
-                        return await response.json();
-                    },
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch popular posts');
+                    }
+                    
+                    return await response.json();
+                },
 
     searchPosts: async function(query, pageNumber) {
                     const params = new URLSearchParams({

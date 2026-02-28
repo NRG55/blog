@@ -16,8 +16,17 @@ const postController = {
                 try {
                     const page = Number(req.query.page) || 1;
                     const limit = Number(req.query.limit) || 5;
+                    let published;
 
-                    const data = await postService.getAll(page, limit);
+                    if (req.query.published === 'true') {
+                        published = true;
+                    };
+
+                    if (req.query.published === 'false') {
+                        published = false;
+                    };
+
+                    const data = await postService.getAll(page, limit, published);
 
                     return res.status(200).json({ ...data });
 
@@ -25,6 +34,17 @@ const postController = {
                     return res.status(500).json({ error: error.message });
                 };   
             },
+
+    getPopular: async function(req, res) {
+                    try {
+                        const posts = await postService.getPopular();
+
+                        res.status(200).json(posts);
+
+                    } catch (error) {
+                        res.status(500).json({ error: error.message });
+                    }
+                },
 
     update: async function(req, res) {   
                 try {
