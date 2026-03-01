@@ -5,7 +5,7 @@ import { useRef } from 'react';
 
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
-const Editor = ({ onInit }) => {
+const Editor = ({ onInit, initialValue }) => {
     const { token } = useAuth();
     const currentImageRef = useRef(null);
 
@@ -53,6 +53,7 @@ const Editor = ({ onInit }) => {
         <TinyMCE
             tinymceScriptSrc="/tinymce/tinymce.min.js"
             onInit={ onInit }
+            initialValue={ initialValue }
             init={{
                 license_key: 'gpl',
                 plugins: ['anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount', 'image'],

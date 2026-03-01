@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoot';
 import PostList from './pages/PostList';
 import NewPost from './pages/NewPost';
 import LoginPage from './pages/LoginPage';
+import EditPost from './pages/EditPost';
 
 const routes = [
     {
@@ -26,9 +27,9 @@ const routes = [
                                     { index: true, element: <PostList /> },
                                     { path: 'create', element: <NewPost /> },
                                     { 
-                                        path: ':id',
+                                        path: ':postId',
                                         children: [
-                                            { path: 'edit', element: <h1>Edit post</h1> },
+                                            { path: 'edit', element: <EditPost /> },
                                             { path: 'comments', element: <h1>Comments for the post</h1> } 
                                         ]
                                     },

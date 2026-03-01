@@ -18,6 +18,7 @@ const postApiService = {
 
                 return await response.json();
             },
+
     getAll: async function(pageNumber) {
                     const params = new URLSearchParams({                         
                         page: pageNumber.toString(),
@@ -32,6 +33,33 @@ const postApiService = {
                     
                     return await response.json();                                  
                 },
+
+    getById: async function(postId) {
+                const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}`);
+
+                if (!response.ok) {
+                    throw new Error('Post not found');
+                };
+
+                return await response.json();
+            },
+
+    update: async function(postId, postData, token) {
+                const response = await fetch(`${SERVER_DOMAIN}/admin/posts/${postId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Update failed');
+                };
+                
+                return await response.json();
+            },
 
     uploadImage: async function(data, token) {                     
                         const response = await fetch(`${SERVER_DOMAIN}/admin/posts/upload-image`, {

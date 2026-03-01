@@ -3,7 +3,7 @@ import generateSlug from "../utils/generateSlug.js";
 import cloudinary from "../config/cloudinary.js";
 
 const postService = {
-    create: async function(authorId, { title, body, published }) {
+    create: async function(authorId, { title, body, imageUrl, imagePublicId, published }) {
                 const slug = await generateSlug(title);
 
                 return await prisma.post.create({
@@ -12,6 +12,8 @@ const postService = {
                         slug,
                         title,
                         body,
+                        imageUrl,
+                        imagePublicId,
                         published,
                     },
                 });
@@ -69,6 +71,20 @@ const postService = {
         return posts;
     },
 
+    getById: async function(id) {
+                return await prisma.post.findUnique( {
+                    where: { id },
+                    include: {
+                        author: {
+                            select: { username: true }
+                        },
+                        _count: {
+                            select: { comments: true }
+                        }
+                    }
+                });
+            },
+
     getBySlug: async function(slug) {
                 return await prisma.post.findUnique( {
                     where: { slug },
@@ -83,14 +99,27 @@ const postService = {
                 });
             },
 
-    update: async function(postId, { title, body }) {
+    update: async function(postId, { title, body, imageUrl, imagePublicId, published }) {
+                const slug = await generateSlug(title);
+
                 return await prisma.post.update({
                     where: { id: postId },
-                    data: { title, body },
+                    data: { 
+                        title,
+                        slug, 
+                        body,
+                        imageUrl,
+                        imagePublicId,
+                        published 
+                    },
                     select: {
                         id: true,
                         title: true,
-                        body: true,        
+                        slug: true,
+                        body: true,
+                        imageUrl: true,
+                        imagePublicId: true,
+                        published: true         
                     },
                 });
             },

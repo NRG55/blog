@@ -48,9 +48,9 @@ const postController = {
 
     update: async function(req, res) {   
                 try {
-                    await postService.update(req.params.postId, req.body);
+                    const updatedPost = await postService.update(req.params.postId, req.body);
 
-                    return res.sendStatus(204);
+                    return res.status(200).json(updatedPost);
 
                 } catch (error) {
                     return res.status(400).json({ error: error.message });
@@ -88,6 +88,17 @@ const postController = {
                 } catch (error) {
                     return res.status(400).json({ error: error.message });
                 };    
+            },
+
+    getById: async function(req, res) {
+                try {
+                    const post = await postService.getById(req.params.postId);
+
+                    return res.status(200).json({ ...post });
+
+                } catch (error) {
+                    return res.status(500).json({ error: error.message });
+                };   
             },
 
     getBySlug: async function(req, res) {
