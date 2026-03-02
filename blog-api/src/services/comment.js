@@ -19,6 +19,25 @@ const commentService = {
                 });
             },
 
+    getAll: async function(page, limit) {                
+                const skip = (page - 1) * limit;               
+
+                const comments = await prisma.comment.findMany({
+                    take: limit,
+                    skip: skip, 
+                    orderBy: { createdAt: 'desc' },
+                    include: {
+                        user: {
+                            select: { username: true }
+                        },                        
+                    },
+                });
+
+                const totalComments = await prisma.comment.count();
+
+                return { comments, totalComments };
+            },
+
     getByPostId: async function(postId, page, limit) {
                     const skip = (page - 1) * limit;
 
