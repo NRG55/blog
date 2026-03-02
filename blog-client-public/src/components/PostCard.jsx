@@ -1,12 +1,12 @@
 import { Link } from "react-router";
-import logo from '../assets/logo.png';
 import formatDate from "../utils/formatDate";
+import stripHtml from "../utils/stripHtml";
 
 const PostCard = ({ post }) => {
-
     const { 
         title, 
-        body, 
+        body,
+        imageUrl, 
         createdAt, 
         slug,
         author: { username }, 
@@ -16,16 +16,16 @@ const PostCard = ({ post }) => {
     return (
         <Link to={`/posts/${slug}`} className="flex items-center gap-8 border-b border-gray-100">
             <div className="h-30 aspect-square bg-gray-100">
-                <img src={logo} className="w-full h-full"/>
+                <img src={imageUrl} className="w-full h-full"/>
             </div>
 
             <div className="w-full py-4">
                 <h1 className="text-2xl font-medium line-clamp-3 sm:line-clamp-2">
-                    {title}
+                    { title }
                 </h1>
 
                 <p className="my-3 text-xl line-clamp-2">
-                    {body}
+                    { stripHtml(body) }
                 </p>
 
                 <div className="flex gap-2 items-center text-sm text-gray-600">

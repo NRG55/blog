@@ -2,7 +2,6 @@ import { useParams } from "react-router";
 import postApiService from "../api/post";
 import { useEffect, useState } from "react";
 import AnimationWrapper from "../components/AnimationWrapper";
-import logo from '../assets/logo.png';
 import formatDate from "../utils/formatDate";
 import CommentSection from "../components/CommentSection";
 
@@ -16,7 +15,7 @@ const PostPage = () => {
                                             author: { username: '' },
                                         });
 
-    const { id, title, body, createdAt, author: { username } } = post;
+    const { id, title, body, imageUrl, createdAt, author: { username } } = post;
 
     const { slug } = useParams();
 
@@ -48,7 +47,7 @@ const PostPage = () => {
                 :
                 <div className="grow flex-col max-w-225 block mx-auto py-10 max-lg:px-[5vw]">
                     <div className="">
-                        <img src={ logo } className="aspect-video"/>
+                        <img src={ imageUrl } className="aspect-video"/>
 
                         <div className="mt-12">
                             <h2 className="text-3xl font-medium">{ title }</h2>
@@ -60,16 +59,15 @@ const PostPage = () => {
                             <p className="mr-8">{ formatDate(createdAt) }</p> 
                         </div>
 
-                        <p>{ body }</p>
+                        <div
+                            dangerouslySetInnerHTML={{ __html: body }}
+                        />
                     </div>
 
                     <CommentSection postId={ id } />
                 </div>
             }
-
-        </AnimationWrapper>
-
-        
+        </AnimationWrapper>        
     );
 };
 

@@ -56,9 +56,9 @@ const commentController = {
 
     delete: async function(req, res) {
                 try {
-                    await commentService.delete(req.params.commentId);
+                    const data = await commentService.delete(req.params.commentId);
 
-                    return res.sendStatus(204);
+                    return res.status(200).json({ ...data });
 
                 } catch (error) {
                     return res.status(400).json({ error: error.message });

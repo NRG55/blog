@@ -39,7 +39,7 @@ const HomePage = () => {
                 setPopularPosts(popularPostsResult);
 
             } catch (error) {
-                console.error(error);
+                console.log(error);
 
             } finally {
                 setIsInitialLoading(false);
@@ -81,68 +81,84 @@ const HomePage = () => {
 
     return (
         <AnimationWrapper>
-            <div className="grow grid md:grid-cols-3 px-8 gap-8">
-                { 
-                    !featuredPost && posts.length === 0 && popularPosts.length === 0 
+            <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-10">
+                {
+                    !featuredPost && posts.length === 0 
                     &&
-                    <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+                    <div className="md:col-span-12 py-20 text-center">
                         <h2 className="text-xl font-medium text-gray-900">No posts found</h2>
-                        <p className="text-gray-500 mt-2">Check back later for new content!</p>
+                        <p className="text-gray-500 mt-2">Please, check back later for new content!</p>
+                    </div>
+                }
+                
+                {
+                    featuredPost 
+                    &&
+                    <div className="md:col-span-12 mb-4">
+                        <FeaturedPostCard post={featuredPost} />
                     </div>
                 }
 
-                { featuredPost && <FeaturedPostCard key={`featured-post`} post={featuredPost} /> }
-                                  
-                {
-                    (posts.length > 0 || popularPosts.length > 0) 
-                    && 
-                    <TableOfContents 
-                        routes={["All posts", "Popular posts"]} 
-                        defaultHidden={["Popular posts"]}
-                        className="md:col-span-2"
-                    >    
-                        <div className="h-full md:col-span-2">                        
-                            {
-                                posts.map((post, i) =>
-                                    <AnimationWrapper key={`post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                        <PostCard key={`post-${i}`} post={post} />
-                                    </AnimationWrapper>
-                            )}                        
-                        
-                            {
-                                posts.length < totalPosts 
-                                &&
-                                <button 
-                                    onClick={loadMorePosts}
-                                    disabled={isMoreLoading}
-                                    className="my-8 block mx-auto underline text-sm tracking-widest font-medium hover:opacity-60 disabled:opacity-30"
-                                >
-                                    { isMoreLoading ? "Loading..." : "LOAD MORE" }                                   
-                                </button>
-                            }
-                        </div>                   
+                <div className="md:col-span-8">
+                    {
+                        (posts.length > 0 || popularPosts.length > 0) 
+                        &&
+                        <TableOfContents 
+                            routes={["All posts", "Popular posts"]} 
+                            defaultHidden={["Popular posts"]}
+                        >
+                            <div className="flex flex-col">                        
+                                {
+                                    posts.map((post, i) =>
+                                        <AnimationWrapper key={`post-${i}`} transition={{ delay: i * .1 }}>
+                                            <PostCard post={post} />
+                                        </AnimationWrapper>)
+                                }                        
+                            
+                                {
+                                    posts.length < totalPosts 
+                                    &&
+                                    <button 
+                                        onClick={loadMorePosts}
+                                        disabled={isMoreLoading}
+                                        className="my-8 block mx-auto underline underline-offset-6 text-sm tracking-widest font-medium hover:opacity-60 disabled:opacity-30"
+                                    >
+                                        { isMoreLoading ? "LOADING..." : "LOAD MORE" }                                   
+                                    </button>
+                                }
+                            </div>
 
-                        {
-                            popularPosts.map((post, i) =>
-                                <AnimationWrapper key={`popular-post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                    <MiniPostCard key={`popular-post-${i}`} post={post} />
-                                </AnimationWrapper>
-                        )}
-                    </TableOfContents>
-                }
+                            <div className="flex flex-col gap-6">
+                                {
+                                    popularPosts.map((post, i) =>
+                                        <AnimationWrapper key={`popular-tab-${i}`} transition={{ delay: i * .1 }}>
+                                            <MiniPostCard post={post} />
+                                        </AnimationWrapper>)
+                                }
+                            </div>
+                        </TableOfContents>
+                    }
+                </div>
 
                 {
                     popularPosts.length > 0 
                     &&
-                    <aside className="hidden md:block md:col-start-3 md:row-start-2 md:row-end-4 sticky top-20 h-fit pr-8">
-                        <div className="border border-gray-100 p-4">
-                            <h3 className="font-medium mb-6">Popular Posts</h3>
+                    <aside className="hidden md:block md:col-span-4 sticky top-24 h-fit">
+                        <div className="pl-8 border-l border-gray-100">
+                            <div className="flex items-center gap-2 mb-8">                        
+                                <h3 className="">
+                                    Popular posts
+                                </h3>
+                            </div>
 
-                            {popularPosts.map((post, i) =>
-                                <AnimationWrapper key={`popular-post-wrapper-${i}`} transition={{ delay: i * .1 }}>
-                                    <MiniPostCard key={`popular-post-${i}`} post={post} />
-                                </AnimationWrapper>
-                            )}
+                            <div className="flex flex-col gap-4">
+                                {
+                                    popularPosts.map((post, i) =>
+                                        <AnimationWrapper key={`side-popular-${i}`} transition={{ delay: i * .1 }}>
+                                            <MiniPostCard post={post} />
+                                        </AnimationWrapper>)
+                                }
+                            </div>                   
                         </div>
                     </aside>
                 }

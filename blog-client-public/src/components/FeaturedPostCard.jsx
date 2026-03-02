@@ -1,11 +1,12 @@
 import { Link } from 'react-router';
-import logo from '../assets/logo.png';
 import formatDate from '../utils/formatDate';
+import stripHtml from '../utils/stripHtml';
 
 const FeaturedPostCard = ({ post }) => {
     const { 
         title, 
-        body, 
+        body,
+        imageUrl, 
         createdAt, 
         slug,
         author: { username },
@@ -15,16 +16,16 @@ const FeaturedPostCard = ({ post }) => {
     return (
         <article className="md:flex md:col-span-3 md:p-8 gap-8">
             <div className="w-full md:max-w-80 aspect-video md:aspect-square my-8 md:my-0">
-                <img src={logo} className="w-full h-full"/>
+                <img src={imageUrl} className="w-full h-full bg-gray-100"/>
             </div>
 
             <div className="w-full">
                 <h1 className="mb-6 text-4xl font-medium line-clamp-3">
-                    {title}
+                    { title }
                 </h1>
 
                 <p className="mb-4 text-xl line-clamp-5">
-                    {body}
+                    { stripHtml(body) }
                 </p>
 
                 <Link to={`/posts/${slug}`} className="relative group inline-block mb-12 font-medium tracking-widest">
@@ -33,7 +34,7 @@ const FeaturedPostCard = ({ post }) => {
                 </Link>
 
                 <div className="flex items-center text-sm text-gray-600">
-                    <p className="capitalize">{username}</p>
+                    <p className="capitalize">{ username }</p>
 
                     <div className="w-px h-4 mx-2 bg-gray-300"></div>
 
