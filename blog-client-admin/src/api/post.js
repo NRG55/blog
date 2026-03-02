@@ -57,9 +57,21 @@ const postApiService = {
                 if (!response.ok) {
                     throw new Error('Update failed');
                 };
-                
+
                 return await response.json();
             },
+
+    delete: async function(postId, token) {
+                    const response = await fetch(`${SERVER_DOMAIN}/admin/posts/${postId}`, {
+                        method: 'DELETE',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` 
+                        },
+                    });
+
+                    return await response.json();
+                },
 
     uploadImage: async function(data, token) {                     
                         const response = await fetch(`${SERVER_DOMAIN}/admin/posts/upload-image`, {

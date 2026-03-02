@@ -59,9 +59,9 @@ const postController = {
 
     delete: async function(req, res) {
                 try {
-                    await postService.delete(req.params.postId);
+                    const deletedPost = await postService.delete(req.params.postId);
 
-                    return res.sendStatus(204);
+                    return res.status(200).json(deletedPost);
 
                 } catch (error) {
                     return res.status(400).json({ error: error.message });

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import postApiService from "../api/post";
 import PostRow from "../components/PostRow";
 import DeleteModal from "../components/DeleteModal";
+import { useAuth } from "../context/AuthContext";
 
 const PostList = () => {
     const [ loading, setLoading ] = useState(false);
@@ -13,6 +14,7 @@ const PostList = () => {
                                                     page: 1
                                                 });
 
+    const { token } = useAuth();                                            
     const { posts, totalPosts, page } = postsData;
 
     const loadPosts = async (pageNumber) => {
@@ -40,9 +42,14 @@ const PostList = () => {
     };
 
     const handleConfirmDelete = async () => {
-        try {
-            // TODO: await postApiService.deletePost(selectedPost.id);
+        try {            
+            if (selectedPost.imagePublicId) {
+                // delete post main image from cloudinary
+                await postApiService.deleteImage(selectedPost.imagePublicId, token);
+            };
             
+            await postApiService.delete(selectedPost.id, token);
+
             setPostsData(prev => ({
                 ...prev,
                 posts: prev.posts.filter(post => post.id !== selectedPost.id),
