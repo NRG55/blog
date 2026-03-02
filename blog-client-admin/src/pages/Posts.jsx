@@ -4,7 +4,7 @@ import PostRow from "../components/PostRow";
 import DeleteModal from "../components/DeleteModal";
 import { useAuth } from "../context/AuthContext";
 
-const PostList = () => {
+const Posts = () => {
     const [ loading, setLoading ] = useState(false);
     const [ isModalOpen, setModalOpen ] = useState(false);
     const [ selectedPost, setSelectedPost ] = useState(null);
@@ -22,6 +22,7 @@ const PostList = () => {
 
         try {            
             const data = await postApiService.getAll(pageNumber);
+            
             setPostsData(prev => ({
                 posts: pageNumber === 1 ? data.posts : [...prev.posts, ...data.posts],
                 totalPosts: data.totalPosts,
@@ -109,4 +110,4 @@ const PostList = () => {
     );
 };
 
-export default PostList;
+export default Posts;

@@ -2,10 +2,11 @@ import App from './App';
 import Layout from './layout/Layout';
 import { Navigate } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoot';
-import PostList from './pages/PostList';
+import Posts from './pages/Posts';
 import NewPost from './pages/NewPost';
 import LoginPage from './pages/LoginPage';
 import EditPost from './pages/EditPost';
+import Comments from './pages/Comments';
 
 const routes = [
     {
@@ -24,13 +25,13 @@ const routes = [
                             {
                                 path: 'posts',
                                 children: [
-                                    { index: true, element: <PostList /> },
+                                    { index: true, element: <Posts /> },
                                     { path: 'create', element: <NewPost /> },
                                     { 
                                         path: ':postId',
                                         children: [
                                             { path: 'edit', element: <EditPost /> },
-                                            { path: 'comments', element: <h1>Comments for the post</h1> } 
+                                            { path: 'comments', element: <h1>CommentsByPost</h1> } 
                                         ]
                                     },
                                 ]
@@ -39,7 +40,7 @@ const routes = [
                             {
                                 path: 'comments',
                                 children: [
-                                    { index: true, element: <h1>All Comments</h1> },
+                                    { index: true, element: <Comments /> },
                                     { path: ':id', element: <h1>Comment Details</h1> }
                                 ]
                             }
