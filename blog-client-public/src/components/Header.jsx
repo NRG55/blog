@@ -1,11 +1,13 @@
 import { Link, useLocation, useNavigate } from "react-router";
 import logo from '../assets/logo.png';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
-const Navbar = () => {
+const Header = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility ] = useState(false);
+    const [ userMenuOpen, setUserMenuOpen ] = useState(false);    
     const { user, logout } = useAuth();
+    const menuRef = useRef(null);
     const location = useLocation();
     const navigate = useNavigate();
     
@@ -31,8 +33,22 @@ const Navbar = () => {
         };
     };
 
+    // add listener to close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setUserMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     useEffect(() => {
         setSearchBoxVisibility(false);
+        setUserMenuOpen(false);
     }, [location]);
 
     return (
@@ -64,7 +80,7 @@ const Navbar = () => {
             </form>
             <div className="flex items-center gap-3 md:gap-6 ml-auto">
                 <button 
-                    className="md:hidden cursor-pointer flex items-center justify-center bg-gray-100 w-10 h-10 rounded-full"
+                    className="md:hidden cursor-pointer flex items-center justify-center bg-gray-100 w-10 h-10 rounded-full hover:bg-gray-200 transition"
                     onClick={() => setSearchBoxVisibility(currentValue => !currentValue)}
                 >
                     <i className="fi fi-rr-search text-xl h-5"></i>
@@ -72,12 +88,36 @@ const Navbar = () => {
                 {
                     user
                     ?
-                    <button
-                        onClick={handleLogout}
-                        className="whitespace-nowrap bg-gray-100 text-black rounded-xs py-2 px-6 capitalize hover:bg-gray-100/60"
-                    >
-                        Log out
-                    </button>
+                    <div className="relative" ref={menuRef}>
+                        <button 
+                            onClick={() => setUserMenuOpen(currentValue => !currentValue)}
+                            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition"
+                        >
+                            <i className="fi fi-rr-user text-xl h-6"></i>
+                        </button>
+
+                        {
+                            userMenuOpen 
+                            &&
+                            <div className="absolute right-0 top-full mt-3 w-48 bg-white border border-gray-100 shadow-xl rounded-xs overflow-hidden">
+                                <div className="p-4">
+                                    <p className="text-xs text-gray-400 mb-2">
+                                        Signed in as
+                                    </p>
+                                    <p className="truncate text-gray-600">
+                                        {user.username}
+                                    </p>
+                                </div>                              
+
+                                <button 
+                                    onClick={handleLogout}
+                                    className="cursor-pointer w-full flex items-center justify-center gap-2 p-4 hover:bg-gray-100 text-sm border-t border-gray-100"
+                                >
+                                    Log out
+                                </button>
+                            </div>
+                        }
+                    </div>
                     :
                     <>
                         <Link 
@@ -101,4 +141,4 @@ const Navbar = () => {
     )
 };
 
-export default Navbar;
+export default Header;

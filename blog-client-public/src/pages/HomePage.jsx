@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AnimationWrapper from "../components/AnimationWrapper";
 import postApiService from "../api/post";
 import PostCard from "../components/PostCard";
-import MiniPostCard from "../components/MiniPostCard";
+import PopularPostCard from "../components/PopularPostCard";
 import FeaturedPostCard from "../components/FeaturedPostCard";
 import TableOfContents from "../components/TableOfContents";
 
@@ -132,7 +132,7 @@ const HomePage = () => {
                                 {
                                     popularPosts.map((post, i) =>
                                         <AnimationWrapper key={`popular-tab-${i}`} transition={{ delay: i * .1 }}>
-                                            <MiniPostCard post={post} />
+                                            <PopularPostCard post={post} />
                                         </AnimationWrapper>)
                                 }
                             </div>
@@ -155,7 +155,7 @@ const HomePage = () => {
                                 {
                                     popularPosts.map((post, i) =>
                                         <AnimationWrapper key={`side-popular-${i}`} transition={{ delay: i * .1 }}>
-                                            <MiniPostCard post={post} />
+                                            <PopularPostCard post={post} />
                                         </AnimationWrapper>)
                                 }
                             </div>                   

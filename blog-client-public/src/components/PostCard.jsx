@@ -24,11 +24,11 @@ const PostCard = ({ post }) => {
                     { title }
                 </h1>
 
-                <p className="my-3 text-xl line-clamp-2">
+                <p className="my-3 line-clamp-2">
                     { stripHtml(body) }
                 </p>
 
-                <div className="flex gap-2 items-center text-sm text-gray-600">
+                <div className="flex gap-2 items-center text-sm text-gray-400">
                     <p className="capitalize">{ username }</p>
                     <div className="w-px h-4 bg-gray-300"></div>
                     <p>{ formatDate(createdAt) }</p>

@@ -20,11 +20,11 @@ const FeaturedPostCard = ({ post }) => {
             </div>
 
             <div className="w-full">
-                <h1 className="mb-6 text-4xl font-medium line-clamp-3">
+                <h1 className="mb-6 text-3xl font-medium line-clamp-3">
                     { title }
                 </h1>
 
-                <p className="mb-4 text-xl line-clamp-5">
+                <p className="mb-4 text-lg line-clamp-5">
                     { stripHtml(body) }
                 </p>
 
@@ -33,7 +33,7 @@ const FeaturedPostCard = ({ post }) => {
                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full"></span>
                 </Link>
 
-                <div className="flex items-center text-sm text-gray-600">
+                <div className="flex items-center text-sm text-gray-400">
                     <p className="capitalize">{ username }</p>
 
                     <div className="w-px h-4 mx-2 bg-gray-300"></div>

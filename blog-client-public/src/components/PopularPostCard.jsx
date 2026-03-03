@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import formatDate from "../utils/formatDate";
 
-const MiniPostCard = ({ post }) => {
+const PopularPostCard = ({ post }) => {
     const { 
         title, 
         createdAt, 
@@ -16,7 +16,7 @@ const MiniPostCard = ({ post }) => {
                     {title}
                 </h3>
 
-                <div className="flex gap-2 items-center text-sm text-gray-600">
+                <div className="flex gap-2 items-center text-sm text-gray-400">
                     <p className="capitalize">{username}</p>
 
                     <div className="w-px h-4 bg-gray-300"></div>
@@ -28,4 +28,4 @@ const MiniPostCard = ({ post }) => {
     )
 };
 
-export default MiniPostCard;
+export default PopularPostCard;
