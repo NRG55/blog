@@ -7,6 +7,7 @@ import NewPost from './pages/NewPost';
 import LoginPage from './pages/LoginPage';
 import EditPost from './pages/EditPost';
 import Comments from './pages/Comments';
+import CommentDetails from './pages/CommentDetails';
 
 const routes = [
     {
@@ -41,7 +42,7 @@ const routes = [
                                 path: 'comments',
                                 children: [
                                     { index: true, element: <Comments /> },
-                                    { path: ':id', element: <h1>Comment Details</h1> }
+                                    { path: ':commentId', element: <CommentDetails /> }
                                 ]
                             }
                         ]

@@ -38,6 +38,16 @@ const commentService = {
                 return { comments, totalComments };
             },
 
+    getById: async function(commentId) {
+                return await prisma.comment.findUnique({
+                    where: { id: commentId },
+                    include: {
+                        user: { select: { username: true } },
+                        post: { select: { title: true } }
+                    }
+                });
+            },
+
     getByPostId: async function(postId, page, limit) {
                     const skip = (page - 1) * limit;
 

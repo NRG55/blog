@@ -22,15 +22,20 @@ const commentApiService = {
                     return await response.json();                                  
                 },
 
-    getById: async function(postId, commentId) {
-                const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}/comments/${commentId}`);
+    getById: async function(commentId, token) {
+                const response = await fetch(`${SERVER_DOMAIN}/admin/comments/${commentId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 
                 if (!response.ok) {
-                    throw new Error('Comment not found');
+                    throw new Error('Failed to fetch comment details');
                 };
-
+                
                 return await response.json();
-            },    
+            },
 
     delete: async function(commentId, token) {
                     const response = await fetch(`${SERVER_DOMAIN}/admin/comments/${commentId}`, {

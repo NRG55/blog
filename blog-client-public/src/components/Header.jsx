@@ -99,7 +99,7 @@ const Header = () => {
                         {
                             userMenuOpen 
                             &&
-                            <div className="absolute right-0 top-full mt-3 w-48 bg-white border border-gray-100 shadow-xl rounded-xs overflow-hidden">
+                            <div className="absolute right-0 top-full mt-2 w-50 bg-white border border-gray-100 shadow-xl rounded-xs overflow-hidden">
                                 <div className="p-4">
                                     <p className="text-xs text-gray-400 mb-2">
                                         Signed in as

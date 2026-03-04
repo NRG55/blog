@@ -22,6 +22,7 @@ router.delete('/posts/:postId', postController.delete);
 
 //Comment routes
 router.get('/comments', commentController.getAll);
+router.get('/comments/:commentId', commentController.getById);
 router.delete('/comments/:commentId', commentController.delete);
 
 export default router;

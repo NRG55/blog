@@ -28,6 +28,19 @@ const commentController = {
                 };   
             },
 
+    getById: async function(req, res) {
+                try {
+                    const commentId = req.params.commentId;                    
+
+                    const data = await commentService.getById(commentId);
+
+                    return res.status(200).json({ message: 'Success', ...data });
+
+                } catch (error) {
+                    return res.status(500).json({ error: error.message });
+                };   
+            },
+
     getByPostId: async function(req, res) {
                 try {
                     const postId = req.params.postId;
