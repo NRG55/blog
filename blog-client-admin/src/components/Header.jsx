@@ -88,7 +88,7 @@ const Header = () => {
 
             <div className="max-w-7xl mx-auto flex items-center gap-6 px-[5vw] text-sm">
                 <NavLink to="/posts" className={activeClass} end>Posts</NavLink>
-                <NavLink to="/comments" className={activeClass}>Comments</NavLink>
+                <NavLink to="/comments" className={activeClass} end>Comments</NavLink>
                 <NavLink to="/posts/create" className={activeClass}>New Post</NavLink>
             </div>
         </header>

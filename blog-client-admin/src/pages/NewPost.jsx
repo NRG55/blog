@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from "react-router";
+import { useNavigate } from 'react-router';
 import Editor from '../components/Editor';
 import postApiService from '../api/post';
 import { useAuth } from '../context/AuthContext';

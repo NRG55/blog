@@ -1,11 +1,15 @@
 const SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
 
 const commentApiService = {
-    getAll: async function(pageNumber, token) {
-                    const params = new URLSearchParams({                         
+    getAll: async function(pageNumber, token, postId = null) {
+                    const params = new URLSearchParams({
                         page: pageNumber.toString(),
                         limit: '5'
-                    });       
+                    });
+
+                    if (postId) {
+                        params.append('postId', postId);
+                    };
                     
                     const response = await fetch(`${SERVER_DOMAIN}/admin/comments?${params}`, {
                         method: 'GET',
@@ -33,7 +37,7 @@ const commentApiService = {
                 if (!response.ok) {
                     throw new Error('Failed to fetch comment details');
                 };
-                
+
                 return await response.json();
             },
 

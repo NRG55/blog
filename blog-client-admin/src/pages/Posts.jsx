@@ -22,7 +22,7 @@ const Posts = () => {
 
         try {            
             const data = await postApiService.getAll(pageNumber);
-            
+
             setPostsData(prev => ({
                 posts: pageNumber === 1 ? data.posts : [...prev.posts, ...data.posts],
                 totalPosts: data.totalPosts,
@@ -76,6 +76,16 @@ const Posts = () => {
                     <p>Loading ...</p>
                 :
                 <>
+                    {
+                        posts.length === 0 
+                        &&
+                        <div className="md:col-span-12 py-20 text-center">
+                            <p className="text-xl font-medium text-gray-500">
+                                No posts found
+                            </p>                            
+                        </div>
+                    }
+
                     <div className="">
                         {posts.map((post) => (
                             <PostRow 

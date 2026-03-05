@@ -31,8 +31,7 @@ const routes = [
                                     { 
                                         path: ':postId',
                                         children: [
-                                            { path: 'edit', element: <EditPost /> },
-                                            { path: 'comments', element: <h1>CommentsByPost</h1> } 
+                                            { path: 'edit', element: <EditPost /> }                                             
                                         ]
                                     },
                                 ]
@@ -40,9 +39,9 @@ const routes = [
 
                             {
                                 path: 'comments',
-                                children: [
-                                    { index: true, element: <Comments /> },
-                                    { path: ':commentId', element: <CommentDetails /> }
+                                children: [                                    
+                                    { path: ':postId?', element: <Comments /> },                                  
+                                    { path: 'details/:commentId', element: <CommentDetails /> }
                                 ]
                             }
                         ]

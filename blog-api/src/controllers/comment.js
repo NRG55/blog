@@ -17,9 +17,10 @@ const commentController = {
     getAll: async function(req, res) {
                 try {
                     const page = Number(req.query.page) || 1;
-                    const limit = Number(req.query.limit) || 5;                    
+                    const limit = Number(req.query.limit) || 5;
+                    const postId = req.query.postId || null;
 
-                    const data = await commentService.getAll(page, limit);
+                    const data = await commentService.getAll(page, limit, postId);
 
                     return res.status(200).json({ ...data });
 

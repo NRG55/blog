@@ -73,7 +73,7 @@ const CommentDetails = () => {
                             </p>                        
                     </div>
 
-                    <p className="text-xl italic mb-6 text-gray-800">
+                    <p className="text-xl mb-6 text-gray-800">
                         "{ comment.message }"
                     </p>
 
@@ -82,7 +82,7 @@ const CommentDetails = () => {
                             Original post
                         </p>
 
-                        <p className="text-2xl font-medium line-clamp-1 text-gray-500">
+                        <p className="text-xl font-medium line-clamp-1 text-gray-500">
                             { comment.post.title }
                         </p>
                     </div>

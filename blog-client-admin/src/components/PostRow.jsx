@@ -7,7 +7,7 @@ const PostRow = ({ post, onDelete }) => {
 
             <div className="flex gap-6 items-center">
                 <Link 
-                    to={`${post.id}/comments`} 
+                    to={`/comments/${post.id}`} 
                     className="flex items-center text-gray-400 hover:text-black transition"
                     title="Comments"
                 >

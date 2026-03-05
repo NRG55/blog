@@ -15,9 +15,9 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, title }) => {
 
                     <p className="text-gray-600 mt-3">
                         Are you sure you want to delete &nbsp;
-                        <span className="font-bold text-gray-900">
-                            "{title}"
-                        </span>?
+                        <span className="font-bold text-gray-900 line-clamp-1">
+                            "{ title }"?
+                        </span>
                     </p>
                 </div>
 
