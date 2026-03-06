@@ -10,6 +10,8 @@ const router = express.Router();
 router.use(requireAuth, requireAdmin);
 
 // Post routes
+router.get('/posts/search', postController.adminSearch);
+
 router.post('/posts/upload-image', upload.single('file'), postController.uploadImage);
 router.delete('/posts/delete-image', postController.deleteImage);
 
@@ -20,7 +22,7 @@ router.post('/posts', postController.create);
 router.put('/posts/:postId', postController.update);
 router.delete('/posts/:postId', postController.delete);
 
-//Comment routes
+// Comment routes
 router.get('/comments', commentController.getAll);
 router.get('/comments/:commentId', commentController.getById);
 router.delete('/comments/:commentId', commentController.delete);

@@ -112,9 +112,20 @@ const postController = {
                 };   
             },
 
-    search: async function(req, res) {
+    publicSearch: async function(req, res) {
                 try {
-                    const data = await postService.search(req.query);
+                    const data = await postService.publicSearch(req.query);
+
+                    return res.status(200).json({ message: 'Success', ...data });
+
+                } catch (error) {
+                    return res.status(500).json({ error: error.message });
+                };   
+            },
+
+    adminSearch: async function(req, res) {
+                try {
+                    const data = await postService.adminSearch(req.query);
 
                     return res.status(200).json({ message: 'Success', ...data });
 

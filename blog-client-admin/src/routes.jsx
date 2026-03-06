@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import EditPost from './pages/EditPost';
 import Comments from './pages/Comments';
 import CommentDetails from './pages/CommentDetails';
+import SearchPage from './pages/SearchPage';
 
 const routes = [
     {
@@ -27,6 +28,7 @@ const routes = [
                                 path: 'posts',
                                 children: [
                                     { index: true, element: <Posts /> },
+                                    { path: 'search', element: <SearchPage /> },
                                     { path: 'create', element: <NewPost /> },
                                     { 
                                         path: ':postId',

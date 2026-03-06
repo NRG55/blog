@@ -15,7 +15,7 @@ const PostRow = ({ post, onDelete }) => {
                 </Link>
 
                 <Link 
-                    to={`${post.id}/edit`} 
+                    to={`/posts/${post.id}/edit`} 
                     className="flex items-center text-gray-400 hover:text-black transition"
                     title="Edit post"
                 >

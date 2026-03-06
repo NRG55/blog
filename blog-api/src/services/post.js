@@ -144,20 +144,27 @@ const postService = {
                 });
             },
 
-    search: async function(query) {
+    publicSearch: async function(query) {
                 const searchTerm = query.query; 
                 const page = parseInt(query.page) || 1;
                 const limit = parseInt(query.limit) || 5;
                 const skip = (page - 1) * limit;
 
-                const [posts, totalPosts] = await Promise.all([
-                    prisma.post.findMany({
-                        where: {
+                const where = {
+                    AND: [
+                        { published: true },
+                        {
                             OR: [
                                 { title: { contains: searchTerm, mode: 'insensitive' } },
                                 { body: { contains: searchTerm, mode: 'insensitive' } }
                             ]
-                        },
+                        }
+                    ]
+                };
+
+                const [posts, totalPosts] = await Promise.all([
+                    prisma.post.findMany({
+                        where,
                         take: limit,
                         skip: skip,
                         orderBy: { createdAt: 'desc' },
@@ -170,14 +177,41 @@ const postService = {
                             },                        
                         },
                     }),
-                    prisma.post.count({
-                        where: {
-                            OR: [
-                                { title: { contains: searchTerm, mode: 'insensitive' } },
-                                { body: { contains: searchTerm, mode: 'insensitive' } }
-                            ]
-                        }
-                    })
+                    prisma.post.count({ where })
+                ]);
+
+                return { posts: [...posts], totalPosts }
+            },
+
+    adminSearch: async function(query) {
+                const searchTerm = query.query; 
+                const page = parseInt(query.page) || 1;
+                const limit = parseInt(query.limit) || 5;
+                const skip = (page - 1) * limit;
+
+                const where = {
+                    OR: [
+                        { title: { contains: searchTerm, mode: 'insensitive' } },
+                        { body: { contains: searchTerm, mode: 'insensitive' } }
+                    ]
+                };
+
+                const [posts, totalPosts] = await Promise.all([
+                    prisma.post.findMany({
+                        where,
+                        take: limit,
+                        skip: skip,
+                        orderBy: { createdAt: 'desc' },
+                        include: {
+                            author: {
+                                select: { username: true }
+                            },
+                            _count: {
+                                select: { comments: true }                            
+                            },                        
+                        },
+                    }),
+                    prisma.post.count({ where })
                 ]);
 
                 return { posts: [...posts], totalPosts }

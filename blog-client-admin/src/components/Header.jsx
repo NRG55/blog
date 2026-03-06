@@ -26,9 +26,9 @@ const Header = () => {
             event.preventDefault();
                         
             const input = event.target.tagName === 'INPUT' ? event.target : event.target.querySelector('input');
-            const query = input.value;
+            const query = input.value.trim();
 
-            if (query.trim().length > 0) {
+            if (query) {
                 setSearchBoxVisibility(false);
                 // hide mobile keyboard
                 input.blur();

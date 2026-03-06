@@ -1,8 +1,8 @@
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
-import AnimationWrapper from "../components/AnimationWrapper";
 import postApiService from "../api/post";
-import PostCard from "../components/PostCard";
+import PostRow from "../components/PostRow";
+import { useAuth } from "../context/AuthContext";
 
 const SearchPage = () => {
     const [ searchParams ] = useSearchParams();
@@ -13,15 +13,15 @@ const SearchPage = () => {
                                                     page: 1
                                                 });
 
-    const { posts, totalPosts, page } = postsData;
-
+    const { posts, totalPosts, page } = postsData;                                                
     const query = searchParams.get('query');
+    const { token } = useAuth();
 
     const searchPosts = async (pageNumber) => {
         setLoading(true);
 
         try {            
-            const data = await postApiService.searchPosts(query, pageNumber);
+            const data = await postApiService.searchPosts(query, pageNumber, token);
 
             setPostsData(prev => ({
                                     ...prev,                                    
@@ -64,11 +64,9 @@ const SearchPage = () => {
                     <p className="my-4">Search results for "{query}":</p>                  
                     <div className="md:col-span-2">                        
                         {                            
-                            posts.map((post, i) => {                        
-                                    return <AnimationWrapper key={post.id} transition={{ delay: i * .1 }}>
-                                                <PostCard post={post} author={post.author} />
-                                            </AnimationWrapper>
-                            })
+                            posts.map((post, i) =>                        
+                                <PostRow key={`post-${i}`} post={post} author={'author'} />
+                            )
                         }                        
                     
                         {
@@ -79,7 +77,7 @@ const SearchPage = () => {
                                 disabled={loading}
                                 className="relative my-8 block mx-auto underline underline-offset-6 text-sm tracking-widest font-medium hover:opacity-60 disabled:opacity-30"
                             >
-                                {loading ? "Loading..." : "LOAD MORE"}                                   
+                                { loading ? "Loading..." : "LOAD MORE" }                                   
                             </button>
                         }
                     </div>

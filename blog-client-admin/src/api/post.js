@@ -101,6 +101,28 @@ const postApiService = {
 
                     return await response.json();
                 },
+
+    searchPosts: async function(query, pageNumber, token) {
+                    const params = new URLSearchParams({
+                        query, 
+                        page: pageNumber.toString(),
+                        limit: '5'
+                    });
+                    
+                    const response = await fetch(`${SERVER_DOMAIN}/admin/posts/search?${params}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });                    
+
+                    if (!response.ok) {                    
+                        throw new Error('Failed to fetch search posts');
+                    };
+                    
+                    return await response.json();                                  
+                },
 };
 
 export default postApiService;
