@@ -18,7 +18,7 @@ const commentService = {
                     }
                 });
             },
-    // admin        
+        
     getAll: async function(page, limit, postId = null) {                
                 const skip = (page - 1) * limit;                
                 const where = postId ? { postId: postId } : {};
@@ -49,36 +49,6 @@ const commentService = {
                     }
                 });
             },
-    // public        
-    getByPostId: async function(postId, page, limit) {
-                    const skip = (page - 1) * limit;
-
-                    const [comments, totalComments] = await prisma.$transaction([
-                        prisma.comment.findMany({
-                            where: { postId },
-                            take: limit,
-                            skip: skip, 
-                            orderBy: { createdAt: 'desc' },
-                            include: {
-                                user: {
-                                    select: {
-                                        username: true,
-                                        id: true
-                                    }
-                                }
-                            }
-                        }),
-
-                        prisma.comment.count({
-                            where: { postId }
-                        })
-                    ]);
-
-                    return {
-                        comments, 
-                        totalComments
-                    };
-                },
 
     update: async function(commentId, message) {
                 return await prisma.comment.update({

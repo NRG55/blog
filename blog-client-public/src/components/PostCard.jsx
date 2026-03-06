@@ -16,7 +16,7 @@ const PostCard = ({ post }) => {
     return (
         <Link to={`/posts/${slug}`} className="flex items-center gap-8 border-b border-gray-100">
             <div className="h-30 aspect-square bg-gray-100">
-                <img src={imageUrl} className="w-full h-full"/>
+                <img src={imageUrl || null} className="w-full h-full"/>
             </div>
 
             <div className="w-full py-4">

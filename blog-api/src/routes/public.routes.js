@@ -13,7 +13,7 @@ router.get('/posts/slug/:slug', postController.getBySlug);
 router.get('/posts/:postId', postController.getById);
 
 // Comment routes
-router.get('/posts/:postId/comments', commentController.getByPostId);
+router.get('/posts/:postId/comments', commentController.getAll);
 router.post('/posts/:postId/comments', requireAuth, commentController.create);
 router.put('/posts/:postId/comments/:commentId', requireAuth, commentController.update);
 router.delete('/posts/:postId/comments/:commentId', requireAuth, commentController.delete);

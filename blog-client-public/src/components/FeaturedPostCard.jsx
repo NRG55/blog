@@ -16,7 +16,7 @@ const FeaturedPostCard = ({ post }) => {
     return (
         <article className="md:flex md:col-span-3 md:p-8 gap-8">
             <div className="w-full md:max-w-80 aspect-video md:aspect-square my-8 md:my-0">
-                <img src={imageUrl} className="w-full h-full bg-gray-100"/>
+                <img src={imageUrl || null} className="w-full h-full bg-gray-100"/>
             </div>
 
             <div className="w-full">

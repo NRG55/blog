@@ -17,7 +17,7 @@ const CommentSection = ({ postId }) => {
         setLoading(true);
 
         try {
-            const data = await commentApiService.getByPostId(postId, pageNumber);
+            const data = await commentApiService.getAll(pageNumber, postId);
 
             setCommentsData(prev => {
                 const allComments = pageNumber === 1 

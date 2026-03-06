@@ -40,22 +40,7 @@ const commentController = {
                 } catch (error) {
                     return res.status(500).json({ error: error.message });
                 };   
-            },
-
-    getByPostId: async function(req, res) {
-                try {
-                    const postId = req.params.postId;
-                    const page = Number(req.query.page) || 1;
-                    const limit = Number(req.query.limit) || 5;
-
-                    const data = await commentService.getByPostId(postId, page, limit);
-
-                    return res.status(200).json({ message: 'Success', ...data });
-
-                } catch (error) {
-                    return res.status(500).json({ error: error.message });
-                };   
-            },
+            },    
 
     update: async function(req, res) {
                 try {

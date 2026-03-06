@@ -25,13 +25,14 @@ const commentApiService = {
                     return await response.json();
 
                 },
-    
-    getByPostId: async function(postId, pageNumber = 1) {
-                    const params = new URLSearchParams({                        
-                        page: pageNumber.toString(),
-                        limit: '5'
-                    });       
 
+    getAll: async function(pageNumber, postId) {
+                    const params = new URLSearchParams({
+                        page: pageNumber.toString(),
+                        limit: '5',
+                        postId
+                    });
+                    
                     const response = await fetch(`${SERVER_DOMAIN}/posts/${postId}/comments?${params}`);                    
 
                     if (!response.ok) {                    
