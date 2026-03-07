@@ -9,6 +9,7 @@ import EditPost from './pages/EditPost';
 import Comments from './pages/Comments';
 import CommentDetails from './pages/CommentDetails';
 import SearchPage from './pages/SearchPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const routes = [
     {
@@ -45,9 +46,13 @@ const routes = [
                                     { path: ':postId?', element: <Comments /> },                                  
                                     { path: 'details/:commentId', element: <CommentDetails /> }
                                 ]
-                            }
+                            },
+
+                            { path: '*', element: <NotFoundPage /> }
                         ]
-                    }
+                    },
+
+                    { path: '*', element: <NotFoundPage /> }
                 ]                
             }      
         ]
