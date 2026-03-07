@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
 import PostPage from './pages/PostPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const routes = [
     {
@@ -33,7 +34,11 @@ const routes = [
                     {
                         path: 'auth/login',
                         element: <LoginPage />
-                    },                    
+                    },
+                    { 
+                        path: '*', 
+                        element: <NotFoundPage /> 
+                    }                    
                 ]                
             }      
         ]
