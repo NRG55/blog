@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Layout = () => {
     return (
@@ -8,7 +9,7 @@ const Layout = () => {
             <main className="grow min-h-[calc(100vh-80px)] flex flex-col">
                 <Outlet />
             </main>                        
-            <footer>Footer</footer>
+            <Footer />
         </div>
     );
 };

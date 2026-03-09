@@ -11,7 +11,7 @@ async function main() {
         where: { 
             slug: { in: 
                 [
-                    'featured-post', 
+                    'welcome-to-my-blog', 
                     'post-title-1',
                     'post-title-2', 
                     'post-title-3',
@@ -73,10 +73,19 @@ async function main() {
             authorId: user.id
         },
         {
-            title: "Featured post",
-            slug: "featured-post",
-            body: "<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime tempora est eius aliquam modi error facilis et, ratione culpa soluta nisi expedita eveniet laboriosam atque distinctio nihil aut aliquid officia harum ipsa nemo similique officiis id? Doloribus cum quas sint</p>",
-            imageUrl: "https://cloudinary.com",
+            title: "Welcome to my blog",
+            slug: "welcome-to-my-blog",
+            body: `
+                    <div>The main task of this project was to build a RESTful API and then create two separate frontend clients to interact with it.</div>
+                    <br>
+                    <div><strong>The public client:</strong> This is where you are right now. Here, guests can browse posts, search for posts and leave comments.</div>
+                    <br>
+                    <div><strong>The admin client:</strong> I built a private, secondary website for the author. This is my personal workspace where I write in a rich text editor TinyMCE, manage my Cloudinary images and the publication status of my posts.</div>
+                    <br>
+                    <div>I&rsquo;m excited to use this space to share more about my development journey, the challenges of building a dual-frontend architecture. Thanks for stopping by!</div>
+                `,
+            imageUrl: "https://res.cloudinary.com/dlc8atazj/image/upload/v1773061034/blog/du7awmfxjt40lmpbptni.png",
+            imagePublicId: "blog/du7awmfxjt40lmpbptni",
             published: true,
             authorId: user.id
         }
