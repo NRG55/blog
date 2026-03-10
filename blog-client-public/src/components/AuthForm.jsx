@@ -14,7 +14,7 @@ const AuthForm = ({ type, onSubmit, errors }) => {
 
             {
                 errors && errors.map((error, i) => (
-                    <p key={"error-" + i}>
+                    <p key={"error-" + i} className="mb-4 text-red-400">
                         {error.msg}
                     </p>
                 ))
