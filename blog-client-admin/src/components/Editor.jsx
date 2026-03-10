@@ -55,6 +55,8 @@ const Editor = ({ onInit, initialValue }) => {
             onInit={ onInit }
             initialValue={ initialValue }
             init={{
+                base_url: '/tinymce',
+                suffix: '.min',
                 license_key: 'gpl',
                 plugins: ['anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount', 'image'],
                 toolbar: 'undo redo | image | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
