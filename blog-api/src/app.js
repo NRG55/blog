@@ -22,6 +22,8 @@ app.use((error, req, res, next) => {
     console.log(error);   
 });
 
-app.listen(process.env.PORT, () => 
-    console.log(`Blog app listening on port ${process.env.PORT}!`),    
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => 
+    console.log(`Blog app listening on port ${PORT}!`)
 );
