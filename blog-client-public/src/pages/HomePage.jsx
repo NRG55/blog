@@ -5,6 +5,7 @@ import PostCard from "../components/PostCard";
 import PopularPostCard from "../components/PopularPostCard";
 import FeaturedPostCard from "../components/FeaturedPostCard";
 import TableOfContents from "../components/TableOfContents";
+import fetchWithRetry from "../utils/fetchWithRetry";
 
 const HomePage = () => {
     const [ isInitialLoading, setIsInitialLoading ] = useState(true);
@@ -24,10 +25,12 @@ const HomePage = () => {
             setIsInitialLoading(true);
 
             try {
-                const [ postsResult, popularPostsResult ] = await Promise.all([
-                    postApiService.getAll(1, 'true'),
-                    postApiService.getPopular()
-                ]);
+                const [ postsResult, popularPostsResult ] = await fetchWithRetry(() => 
+                    Promise.all([
+                        postApiService.getAll(1, 'true'),
+                        postApiService.getPopular()
+                    ])
+                );
 
                 setPostsData({
                     featuredPost: postsResult.featuredPost,
