@@ -77,7 +77,7 @@ const HomePage = () => {
     if (isInitialLoading) {
         return (
             <div className="grow flex items-center justify-center min-h-[50vh]">
-                <p className="animate-pulse font-medium">Loading Page...</p>
+                <p className="animate-pulse font-medium">Loading posts...</p>
             </div>
         );
     };

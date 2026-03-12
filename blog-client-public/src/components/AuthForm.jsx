@@ -2,11 +2,10 @@ import { Link } from "react-router";
 import Input from "./Input";
 
 const AuthForm = ({ type, onSubmit, errors }) => {
-
     return (
         <form
             onSubmit={onSubmit} 
-            className="w-[80%] max-w-100 -mt-60"
+            className="w-[80%] max-w-100 md:-mt-60"
         >
             <h1 className="text-3xl text-center mb-18">
                 {type === 'login' ? 'Welcome Back' : 'Create Account'}

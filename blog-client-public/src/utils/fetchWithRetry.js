@@ -1,4 +1,4 @@
-const fetchWithRetry = async (fetchFunction, retries = 5, delay = 1500) => {
+const fetchWithRetry = async (fetchFunction, retries = 8, delay = 1500) => {
     try {
         return await fetchFunction();
     } catch (error) {
